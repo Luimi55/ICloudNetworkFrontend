@@ -13,6 +13,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
 import {handleDrawerToggle} from '../redux/reducers/MenuSlice'
 import {useDispatch } from 'react-redux'
+import LinkApp from './LinkApp';
 
 const MenuDetail = () => {
   const dispatch = useDispatch()
@@ -51,7 +52,7 @@ const MenuDetail = () => {
       <Divider />
       <List>
         {list.map((item, index) => (
-          <Link key={index} to={item.link} onClick={()=>dispatch(handleDrawerToggle())} style={{ textDecoration: 'none', color:'black' }} >
+          <LinkApp key={index} to={item.link} onClick={()=>dispatch(handleDrawerToggle())} color="black">
             <ListItem  disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -60,13 +61,13 @@ const MenuDetail = () => {
                 <ListItemText primary={item.text} />
               </ListItemButton>
             </ListItem>
-          </Link>
+          </LinkApp>
         ))}
       </List>
       <Divider />
       <List>
         {otherList.map((item, index) => (
-          <Link key={index} to={item.link} style={{ textDecoration: 'none', color:'black' }} >
+          <LinkApp key={index} to={item.link} onClick={()=>dispatch(handleDrawerToggle())} color="black">
             <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -75,7 +76,7 @@ const MenuDetail = () => {
               <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
-        </Link>
+        </LinkApp>
         ))}
       </List>
     </>
