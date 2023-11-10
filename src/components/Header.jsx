@@ -12,7 +12,7 @@ const Header = ({name, hideMenuIcon}) => {
     const drawerWidth = Constants.drawerWidth;
     const headerHeight = Constants.headerHeight;
     const dispatch = useDispatch()
-  console.log(hideMenuIcon)
+
   return (
     <>
       <AppBar

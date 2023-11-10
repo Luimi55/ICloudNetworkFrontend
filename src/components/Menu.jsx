@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import MenuDetail from './MenuDetail';
 import {Constants} from '../assets/Constants';
@@ -16,11 +15,6 @@ const Menu = (props) =>  {
 
   return (
     <div sx={{ display: 'flex' }}>
-      {/* <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
-      > */}
         <Drawer
           container={container}
           variant="temporary"
@@ -35,7 +29,6 @@ const Menu = (props) =>  {
         >
           <MenuDetail/>
         </Drawer>
-      {/* </Box> */}
     </div>
   );
 }

@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react'
-// import Box from '@mui/material/Box';
 import {
-  // Box,
   Button,
 } from '@mui/material';
 import Header from '../../components/Header'
@@ -14,32 +12,16 @@ import Styles from '../../styles/EmployeeReport.module.css'
   import EditIcon from '@mui/icons-material/Edit';
   import DeleteIcon from '@mui/icons-material/DeleteOutlined';
   import { Link } from 'react-router-dom';
+  import LinkApp from '../../components/LinkApp';
+  import { useSelector } from 'react-redux';
+  import EmployeeCostReport from '../../reports/EmployeeCostReport';
+  import { 
+    PDFDownloadLink 
+  } from '@react-pdf/renderer';
 
 const EmployeeReport = () => {
 
-    const [orderId, setOrderId] = useState("");
-    const [cost, setCost] = useState("");
-    const [hours, setHours] = useState("");
-    var id=1;
-
-
-
-    const [data, setData] = useState([
-    {
-        id: 1,
-        date: new Date().toLocaleDateString(),
-        orderId: "#1234",
-        orderDescription: "X",
-        cost: "10",
-        hours: "8",
-        materials: "2",
-        parking: "2",
-        toll: "2",
-        others: "2"
-    },
-    
-    ])
-
+    const employeeReportList = useSelector((state)=>state.EmployeeReport.employeeReportList)
 
     const col = [
       { field: 'id', headerName: 'Id'},
@@ -50,6 +32,7 @@ const EmployeeReport = () => {
       { field: 'materials', headerName: 'Materials'},
       { field: 'parking', headerName: 'Parking'},
       { field: 'toll', headerName: 'TOLL'},
+      { field: 'milla', headerName: 'Milla'},
       { field: 'others', headerName: 'Others'},
       {
         field: 'actions',
@@ -77,21 +60,6 @@ const EmployeeReport = () => {
         },
       },
     ];
-
-
-
-      const addReport = () => {
-        const newReport = {
-          id: id+1,
-          date: new Date().toLocaleDateString(),
-          orderId: orderId,
-          projectDescription: "",
-          cost: cost,
-          hours: hours
-        }
-
-        setData([...data, newReport])
-      }
       
     
   return (
@@ -99,35 +67,48 @@ const EmployeeReport = () => {
     className={Styles.screenBody}
     >
       <Header name="Employee Report"/>  
+
+      <div style={{
+        // backgroundColor: 'red',
+        justifyContent: 'space-between',
+        //gap: 10,
+        display: 'flex'
+      }}>
+        <LinkApp to={"/employeeReport/create"} color="white">
+          <Button
+            variant="contained"
+            color="confirm"
+            sx={{
+              marginBottom: "1%",
+              //justifyContent: 'space-between'
+            }}
+            //onClick={()=>addReport()}
+          >
+              Add Report
+          </Button>     
+        
+        </LinkApp>
+        <PDFDownloadLink document={<EmployeeCostReport/>} fileName='ex.pdf'>
+          <Button
+              variant="contained"
+              color="confirm"
+              sx={{
+                marginBottom: "1%",
+                color:'white'
+              }}
+              //onClick={}
+            >
+                Generate report
+            </Button> 
+        </PDFDownloadLink>
+
+        
+      </div>
           
-      <Link to={"/employeeReport/create"}  style={{ textDecoration: 'none', color:'white' }}>
-
-      <Button
-        variant="contained"
-        color="confirm"
-        //onClick={()=>addReport()}
-      >
-          Add Report
-      </Button>       
-      </Link>
-
-      {/* <Box
-      sx={{
-        width: '100%',
-        '& .actions': {
-          color: 'text.secondary',
-        },
-        '& .textPrimary': {
-          color: 'text.primary',
-        },
-        backgroundColor: 'white',
-        marginTop: '10px'
-      }}
-    > */}
 
             
         <DataGrid
-        rows={data}
+        rows={employeeReportList}
         columns={col}
         initialState={{
           pagination: {
@@ -136,7 +117,7 @@ const EmployeeReport = () => {
         }}
         pageSizeOptions={[5, 10]}
       />
-    {/* </Box> */}
+
 
     </div>
   )
