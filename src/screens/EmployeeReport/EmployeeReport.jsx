@@ -3,7 +3,7 @@ import {
   Button,
 } from '@mui/material';
 import Header from '../../components/Header'
-import Styles from '../../styles/EmployeeReport.module.css'
+import Styles from '../../styles/General.module.css'
 
   import {
     DataGrid,
@@ -16,13 +16,17 @@ import Styles from '../../styles/EmployeeReport.module.css'
   import { useSelector } from 'react-redux';
   import EmployeeCostReport from '../../reports/EmployeeCostReport';
   import { 
-    PDFDownloadLink 
+    PDFDownloadLink ,
+    PDFViewer
   } from '@react-pdf/renderer';
 
 const EmployeeReport = () => {
 
     const employeeReportList = useSelector((state)=>state.EmployeeReport.employeeReportList)
-
+    console.log(employeeReportList)
+    const getBaseUrl = () => {
+      return location.protocol + '//' + location.host;
+    }
     const col = [
       { field: 'id', headerName: 'Id'},
       { field: 'date', headerName: 'Date'},
@@ -66,6 +70,13 @@ const EmployeeReport = () => {
     <div 
     className={Styles.screenBody}
     >
+      <div 
+        style={{
+          width:"73%",
+          margin: "auto"
+        }}
+      >
+
       <Header name="Employee Report"/>  
 
       <div style={{
@@ -88,7 +99,7 @@ const EmployeeReport = () => {
           </Button>     
         
         </LinkApp>
-        <PDFDownloadLink document={<EmployeeCostReport/>} fileName='ex.pdf'>
+        {/* <PDFDownloadLink document={<EmployeeCostReport employeeReportList={employeeReportList}/>} fileName='ex.pdf'>
           <Button
               variant="contained"
               color="confirm"
@@ -100,13 +111,27 @@ const EmployeeReport = () => {
             >
                 Generate report
             </Button> 
-        </PDFDownloadLink>
+        </PDFDownloadLink> */}
 
-        
+        <LinkApp to={"/employeeReport/report"} color="white">
+          <Button
+              variant="contained"
+              color="confirm"
+              sx={{
+                marginBottom: "1%",
+                color:'white'
+              }}
+              // onClick={()=> window.open(`${getBaseUrl()}/employeeReport/report`, "_blank", 'noopener,noreferrer')}
+              //onClick={}
+            >
+                Generate report
+            </Button> 
+        </LinkApp>
+
+
       </div>
           
 
-            
         <DataGrid
         rows={employeeReportList}
         columns={col}
@@ -115,10 +140,14 @@ const EmployeeReport = () => {
             paginationModel: { page: 0, pageSize: 5 },
           },
         }}
+        autoHeight = {true}
         pageSizeOptions={[5, 10]}
-      />
+        />
+      </div>
 
-
+      {/* <PDFViewer style={{width: "100%", height: "90vh"}}>
+        <EmployeeCostReport employeeReportList={employeeReportList}/>
+        </PDFViewer> */}
     </div>
   )
 }

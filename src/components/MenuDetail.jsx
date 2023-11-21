@@ -9,6 +9,7 @@ import Toolbar from '@mui/material/Toolbar';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Typography from '@mui/material/Typography';
+import SettingsIcon from '@mui/icons-material/Settings';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
 import {handleDrawerToggle} from '../redux/reducers/MenuSlice'
@@ -28,6 +29,11 @@ const MenuDetail = () => {
       text: "Employee Report",
       link: "employeeReport",
       icon: <AccessTimeIcon/>
+    },
+    {
+      text: "Configuration",
+      link: "configuration",
+      icon: <SettingsIcon/>
     }
   ]
 

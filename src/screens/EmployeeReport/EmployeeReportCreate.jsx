@@ -6,7 +6,7 @@ import {
     Button,
     Toolbar,
   } from '@mui/material';
-import Styles from '../../styles/EmployeeReport.module.css'
+import Styles from '../../styles/General.module.css'
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik' 
 import * as Yup from 'yup';

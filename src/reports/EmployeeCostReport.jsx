@@ -1,0 +1,236 @@
+import React, {useState} from 'react'
+import { 
+    Page, 
+    Text, 
+    View, 
+    Document, 
+    StyleSheet,
+    PDFViewer
+  } from '@react-pdf/renderer';
+  import { useSelector } from 'react-redux';
+
+const EmployeeCostReport = () => {
+
+  const employeeReportList = useSelector((state)=>state.EmployeeReport.employeeReportList);
+  const companyDiscount = useSelector((state)=>state.CompanyDiscount.companyDiscount);
+  const getTotalHours = () => {
+    var totalhours = 0;
+    employeeReportList.map(employeeReport=>
+      totalhours+= parseInt(employeeReport.hours) 
+      )
+      return totalhours
+  }
+  const getTotalUs = () => {
+    var totalUs = 0;
+    employeeReportList.map(employeeReport=>
+      totalUs+= parseFloat(
+          employeeReport.hours*employeeReport.cost*companyDiscount+
+          parseInt(employeeReport.materials) +
+          parseInt(employeeReport.parking) +
+          parseInt(employeeReport.toll) +
+          parseInt(employeeReport.milla) +
+          parseInt(employeeReport.others)
+        ) 
+      )
+      return totalUs
+  }
+  console.log(getTotalHours())
+  return (
+    <PDFViewer style={{width: "100%", minHeight: "100vh"}}>
+        <Document>
+          <Page style={styles.body} orientation='landscape'>
+            <View>
+              <Text>MODULO DE REPORTES DE HORA</Text>
+            </View>
+            <View style={styles.table}> 
+              <View style={styles.tableRow}> 
+                <View style={styles.headerCol}> 
+                  <Text style={styles.tableCell}>Date</Text> 
+                </View> 
+                <View style={styles.headerCol}> 
+                  <Text style={styles.tableCell}>Order Id</Text> 
+                </View> 
+                <View style={styles.headerCol}> 
+                  <Text style={styles.tableCell}>Cost</Text> 
+                </View> 
+                <View style={styles.headerCol}> 
+                  <Text style={styles.tableCell}>Materials</Text> 
+                </View> 
+                <View style={styles.headerCol}> 
+                  <Text style={styles.tableCell}>Parking</Text> 
+                </View> 
+                <View style={styles.headerCol}> 
+                  <Text style={styles.tableCell}>Toll</Text> 
+                </View> 
+                <View style={styles.headerCol}> 
+                  <Text style={styles.tableCell}>Milla</Text> 
+                </View>
+                <View style={styles.headerCol}> 
+                  <Text style={styles.tableCell}>Others</Text> 
+                </View>  
+                <View style={styles.headerCol}> 
+                  <Text style={styles.tableCell}>Hours</Text> 
+                </View>  
+                <View style={styles.headerCol}> 
+                  <Text style={styles.tableCell}>Total</Text> 
+                  <Text style={styles.tableCell}>Value</Text> 
+                </View>  
+                <View style={styles.headerCol}> 
+                  <Text style={styles.tableCell}>Company</Text> 
+                  <Text style={styles.tableCell}>Discount</Text> 
+                </View> 
+                <View style={styles.headerCol}> 
+                  <Text style={styles.tableCell}>Total</Text> 
+                </View>  
+              </View>
+              {employeeReportList && 
+                employeeReportList.map((report, key)=>{
+                  return (
+                  <View key={key} style={styles.tableRow}> 
+
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>{report.date}</Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>{report.orderId}</Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>${report.cost}</Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>{report.materials}</Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>{report.parking}</Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>{report.toll}</Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>{report.milla}</Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>{report.others}</Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>{report.hours}</Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>{report.hours*report.cost}</Text> 
+                    </View>
+                    <View style={styles.tableCol}> 
+                      <Text style={styles.tableCell}>{companyDiscount*100}%</Text> 
+                    </View> 
+                    <View style={styles.tableCol}> 
+                      <Text style={styles.tableCell}>{
+                          report.hours*report.cost*companyDiscount + 
+                          parseInt(report.materials) +
+                          parseInt(report.parking )+
+                          parseInt(report.toll) +
+                          parseInt(report.milla) +
+                          parseInt(report.others)
+                        
+                      }</Text> 
+                    </View> 
+                  </View> 
+                  )
+                })}
+                
+                <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}></Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}></Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>Total hours</Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}></Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}></Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}></Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}></Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}></Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>{getTotalHours()}</Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}></Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>Total US$</Text> 
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>{getTotalUs()}</Text> 
+                    </View>
+                </View>
+            </View>
+        </Page>
+      </Document>
+    </PDFViewer>
+    
+  )
+}
+
+const styles = StyleSheet.create({
+  body:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flex: 1,
+  },
+  table: { 
+    display: "table", 
+    width: "auto", 
+    borderStyle: "solid", 
+    borderWidth: 1, 
+    borderRightWidth: 0, 
+    borderBottomWidth: 0,
+    
+  }, 
+  tableRow: { 
+    // margin: "auto", 
+    flexDirection: "row" 
+  }, 
+  tableCol: { 
+    width: "8.33%",  
+    borderStyle: "solid", 
+    borderWidth: 1, 
+    borderLeftWidth: 0, 
+    borderTopWidth: 0,
+    height: 20
+  }, 
+  headerCol: { 
+    width: "8.33%", 
+    borderStyle: "solid", 
+    borderWidth: 1, 
+    borderLeftWidth: 0, 
+    borderTopWidth: 0,
+    height: 32
+  }, 
+  tableCell: { 
+    margin: "auto", 
+    // marginTop: 5, 
+    fontSize: 10 ,
+    // flexDirection: ""
+  },
+  invisibleCol:{
+    width: "10%", 
+    borderStyle: "solid", 
+    borderWidth: 1, 
+    borderLeftWidth: 0, 
+    borderTopWidth: 0 
+  }
+});
+
+export default EmployeeCostReport
