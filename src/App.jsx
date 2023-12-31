@@ -14,6 +14,9 @@ import EmployeeReport from './screens/EmployeeReport/EmployeeReport';
 import EmployeeReportCreate from './screens/EmployeeReport/EmployeeReportCreate';
 import EmployeeCostReport from './reports/EmployeeCostReport';
 import Configuration from './screens/Configuration';
+import RequireAuth from './hooks/auth/RequireAuth';
+import Login from './screens/auth/Login'
+import Signup from './screens/auth/Signup'
 
 function App() {
 
@@ -21,17 +24,22 @@ function App() {
     <>
       <Provider store={Store}>
         <ThemeProvider theme={Theme}>
-          <BrowserRouter>
-            <CssBaseline />
-             <Menu/>  
-            <Routes>
-              <Route path='/' Component={Home}/>
-              <Route path='/employeeReport' Component={EmployeeReport}/>
-              <Route path='/employeeReport/create' Component={EmployeeReportCreate}/>
-              <Route path='/employeeReport/report' Component={EmployeeCostReport}/>
-              <Route path='/configuration' Component={Configuration}/>
-            </Routes>
-          </BrowserRouter>
+            <BrowserRouter>
+              <CssBaseline />
+              <Menu/>  
+              <Routes>
+                <Route path='/login' Component={Login}/>
+                <Route path='/Signup' Component={Signup}/>
+
+                <Route element={<RequireAuth/>}>
+                  <Route path='/' Component={Home}/>
+                  <Route path='/employeeReport' Component={EmployeeReport}/>
+                  <Route path='/employeeReport/create' Component={EmployeeReportCreate}/>
+                  <Route path='/employeeReport/report' Component={EmployeeCostReport}/>
+                  <Route path='/configuration' Component={Configuration}/>
+                </Route>
+              </Routes>
+            </BrowserRouter>
         </ThemeProvider>
       </Provider>
     </>

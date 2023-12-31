@@ -14,29 +14,31 @@ import { useSelector, useDispatch } from 'react-redux'
 import {addEmployeeReport} from '../../redux/reducers/EmployeeReportSlice'
 import LinkApp from '../../components/LinkApp';
 import { useNavigate } from "react-router-dom";
+import EmployeeReportService from '../../services/EmployeeReportService';
 
 const EmployeeReportCreate = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const employeeReportService = EmployeeReportService();
+
     const formik = useFormik({
         initialValues: {
             id:'',
-            date: '',
             orderId: '',
-            cost: '',
-            hours: '',
-            materials: '',
-            parking: '',
-            toll: '',
-            milla: '',
-            others:'',
+            cost: 0,
+            hours: 0,
+            materials: 0,
+            parking: 0,
+            toll: 0,
+            milla: 0,
+            others:0,
 
           },
           validationSchema:Yup.object({
             orderId: Yup.string()
-            .max(15, "Enter less than 15 characters")
+            .max(30, "Enter less than 30 characters")
             .required("This field is required"),
             cost: Yup.number()
             .typeError("Please enter numeric characters")
@@ -50,11 +52,19 @@ const EmployeeReportCreate = () => {
             .typeError("Please enter numeric characters"),
             toll: Yup.number()
             .typeError("Please enter numeric characters"),
+            milla: Yup.number()
+            .typeError("Please enter numeric characters"),
             others: Yup.number()
             .typeError("Please enter numeric characters")
           }),
-          onSubmit: values => {
-            dispatch(addEmployeeReport(values))
+          onSubmit:async values => {
+            await employeeReportService.AddEmployeeReport(values)
+            .then(res=>{
+                console.log(res)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
             navigate("/employeeReport")
           }
     })
@@ -136,12 +146,12 @@ const EmployeeReportCreate = () => {
             </Grid>
             <Grid item xs={6}>
             <TextField
-                 error={formik.errors.others?true:false}
+                 error={formik.errors.milla?true:false}
                  label="Milla" 
                  variant="outlined" 
                  value={formik.values.milla} 
                  onChange={formik.handleChange('milla')}
-                 helperText={formik.errors.others}
+                 helperText={formik.errors.milla}
                 />
             </Grid>
             <Grid item xs={6}>

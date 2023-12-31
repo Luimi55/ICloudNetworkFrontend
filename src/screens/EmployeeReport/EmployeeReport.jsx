@@ -19,18 +19,30 @@ import Styles from '../../styles/General.module.css'
     PDFDownloadLink ,
     PDFViewer
   } from '@react-pdf/renderer';
+  import EmployeeReportService from '../../services/EmployeeReportService';
 
 const EmployeeReport = () => {
 
-    const employeeReportList = useSelector((state)=>state.EmployeeReport.employeeReportList)
-    console.log(employeeReportList)
+    const [employeeReportList,setEmployeeReportList] = useState([])
+
+    const employeeReportService = EmployeeReportService();
+
+    useEffect(()=>{
+      employeeReportService.GetEmployeeReport()
+        .then(res=>{
+          setEmployeeReportList(res.data)
+        })
+        .catch(err=>{
+          console.log(res)
+        })
+    },[])
+
     const getBaseUrl = () => {
       return location.protocol + '//' + location.host;
     }
     const col = [
-      { field: 'id', headerName: 'Id'},
-      { field: 'date', headerName: 'Date'},
       { field: 'orderId', headerName: 'Order Id'},
+      { field: 'reportDate', headerName: 'Date'},
       { field: 'cost', headerName: 'Cost per hour'},
       { field: 'hours', headerName: 'Hours'},
       { field: 'materials', headerName: 'Materials'},
@@ -133,6 +145,7 @@ const EmployeeReport = () => {
           
 
         <DataGrid
+        getRowId={(row) => row.orderId}
         rows={employeeReportList}
         columns={col}
         initialState={{

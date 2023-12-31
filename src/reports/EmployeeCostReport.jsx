@@ -20,18 +20,46 @@ const EmployeeCostReport = () => {
       )
       return totalhours
   }
+  const getRowTotal = (employeeReport) =>{
+    var total = 0;
+
+    const material = employeeReport.materials ? parseInt(employeeReport.materials) : 0;
+    const parking = employeeReport.parking ? parseInt(employeeReport.parking) : 0;
+    const toll = employeeReport.toll ? parseInt(employeeReport.toll) : 0;
+    const milla = employeeReport.milla ? parseInt(employeeReport.milla) : 0;
+    const others = employeeReport.others ? parseInt(employeeReport.others) : 0;
+
+    
+      total+= parseFloat(
+          employeeReport.hours*employeeReport.cost*companyDiscount+
+          material +
+          parking +
+          toll +
+          milla +
+          others
+        ) 
+      
+      return total
+  }
   const getTotalUs = () => {
     var totalUs = 0;
-    employeeReportList.map(employeeReport=>
+    employeeReportList.map(employeeReport=>{
+
+      const material = employeeReport.materials ? parseInt(employeeReport.materials) : 0;
+      const parking = employeeReport.parking ? parseInt(employeeReport.parking) : 0;
+      const toll = employeeReport.toll ? parseInt(employeeReport.toll) : 0;
+      const milla = employeeReport.milla ? parseInt(employeeReport.milla) : 0;
+      const others = employeeReport.others ? parseInt(employeeReport.others) : 0;
+
       totalUs+= parseFloat(
           employeeReport.hours*employeeReport.cost*companyDiscount+
-          parseInt(employeeReport.materials) +
-          parseInt(employeeReport.parking) +
-          parseInt(employeeReport.toll) +
-          parseInt(employeeReport.milla) +
-          parseInt(employeeReport.others)
+          material +
+          parking +
+          toll +
+          milla +
+          others
         ) 
-      )
+      })
       return totalUs
   }
   console.log(getTotalHours())
@@ -123,13 +151,7 @@ const EmployeeCostReport = () => {
                     </View> 
                     <View style={styles.tableCol}> 
                       <Text style={styles.tableCell}>{
-                          report.hours*report.cost*companyDiscount + 
-                          parseInt(report.materials) +
-                          parseInt(report.parking )+
-                          parseInt(report.toll) +
-                          parseInt(report.milla) +
-                          parseInt(report.others)
-                        
+                        getRowTotal(report)
                       }</Text> 
                     </View> 
                   </View> 

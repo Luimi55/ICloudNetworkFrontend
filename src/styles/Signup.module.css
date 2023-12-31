@@ -1,0 +1,15 @@
+.signupContainer{
+border: 1px #8d99ae solid;
+justify-content: center;
+align-items: center;
+width: 25%;
+padding: 1%
+}
+
+.title{
+    font-size:30px;
+}
+
+.loginLine{
+    display: block;
+}

@@ -6,19 +6,30 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import {Constants} from '../assets/Constants';
 import {handleDrawerToggle} from '../redux/reducers/MenuSlice'
-import {useDispatch } from 'react-redux'
+import {useSelector, useDispatch } from 'react-redux'
+import HeaderStyles from '../styles/Header.module.css'
+import {
+  Stack,
+} from '@mui/material';
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
+
 
 const Header = ({name, hideMenuIcon}) => {
     const drawerWidth = Constants.drawerWidth;
     const headerHeight = Constants.headerHeight;
+    const COOKIE = import.meta.env.VITE_SECRET_COOKIE
+    const user = jwtDecode(Cookies.get(COOKIE));
     const dispatch = useDispatch()
-
   return (
     <>
       <AppBar
         position="fixed"
         //color="primary"
         sx={{
+          flexDirection:'row',
+          alignItems:'center',
+          justifyContent: 'space-between'
         }}
       >
         <Toolbar>
@@ -31,9 +42,23 @@ const Header = ({name, hideMenuIcon}) => {
           >
             <MenuIcon />
           </IconButton>}
-            <Typography variant="h6" noWrap component="div">
+          
+          
+
+
+            <Typography variant="h6" component="div" sx={{justifyContent:'space-between'}} alignItems={'flex-end'}>
               {name}
+              
             </Typography>
+            {/* <Typography variant="h6" component="div">
+              
+              
+            </Typography> */}
+
+
+        </Toolbar>
+        <Toolbar>
+          Hello, {user.given_name} {user.family_name}
         </Toolbar>
       </AppBar>
     </>

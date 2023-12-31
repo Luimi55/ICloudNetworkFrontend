@@ -1,0 +1,7 @@
+.rowContainer{
+    border: 3px green solid;
+    flex-direction: row;
+    flex:1;
+    justify-content: flex-end;    
+    align-items: flex-end;
+}
