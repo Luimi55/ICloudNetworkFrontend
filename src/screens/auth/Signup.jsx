@@ -24,15 +24,28 @@ const Signup = () => {
   const userService = UserService();
   const roleService=  RoleService();
 
-  const [roles,setRoles] = useState([])
+  //const [roles,setRoles] = useState([]) Backend
+
+  //Local
+  const [roles,setRoles] = useState([
+    {
+      id: 1,
+      name: 'Technician',
+    },
+    {
+      id: 2,
+      name: 'Supervisor'
+    }
+  ])
 
 
   useEffect(()=>{
 
-    roleService.GetRoles()
-    .then(res=>{
-      setRoles(res.data)
-    })
+    //Backend
+    // roleService.GetRoles()
+    // .then(res=>{
+    //   setRoles(res.data)
+    // })
     
   },[])
 
@@ -65,7 +78,8 @@ const Signup = () => {
         .required("This field is required"),
       }),
       onSubmit: values => {
-        userService.SignUp(values)
+        //userService.SignUp(values) BACKEND
+        localStorage.setItem('users', JSON.stringify(values))//Local
         navigate("/")
       }
 })
