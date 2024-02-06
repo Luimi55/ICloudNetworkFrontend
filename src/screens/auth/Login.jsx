@@ -20,6 +20,7 @@ import {
 
 const Login = () => {
 
+    const {generate} = useGuid();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {saveCookie} = useAuth();
@@ -42,27 +43,33 @@ const Login = () => {
             .required("This field is required")
           }),
           onSubmit: async values => {
-            await userService.LogIn(values)
-            .then(res=>{
-                const token = res.data;
-                saveCookie({
-                    token: token,
-                    expires: 1,
-                })
-                // dispatch(setUser({
-                //     id: user.id,
-                //     firstName: user.firstName,
-                //     lastName: user.lastName,
-                //     email: user.email,
-                //     userRoleId: user.userRoleId,
-                //     active: user.active,
-                //     token: user.token,
-                // }))
-                navigate("/")
-            })
-            .catch(err=>{
-                console.log(err)
-            })
+            //local
+            const users = JSON.parse(localStorage.getItem('users'));
+            if (users) {
+                const foundUser = users.filter(user=>user.email == values.email &&user.password==values.password)
+                if(foundUser.length > 0){
+                    //const token = generate();
+                    saveCookie({
+                        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NTEwMTZhYy1lMmZhLTRhNjAtMWFmZi0wOGRjMDI3ODdhMWIiLCJnaXZlbl9uYW1lIjoiVGVzdCIsImZhbWlseV9uYW1lIjoiVGVzdCIsInVuaXF1ZV9uYW1lIjoiNSIsImdlbmRlciI6IlRydWUiLCJpc3MiOiJJQ2xvdWROZXR3b3JraW5nIiwiYXVkIjoiRW1wbG95ZWVycyJ9.vjqbaVMdD4sra1_0tu8Te3oTWgqzrpMROoaQR0-IGXo",
+                        expires: 1,
+                    })
+                    navigate("/")
+                }
+            }
+
+            //backend
+            //await userService.LogIn(values)
+            // .then(res=>{
+            //     const token = res.data;
+            //     saveCookie({
+            //         token: token,
+            //         expires: 1,
+            //     })
+            //     navigate("/")
+            // })
+            // .catch(err=>{
+            //     console.log(err)
+            // })
           }
     })
   return (

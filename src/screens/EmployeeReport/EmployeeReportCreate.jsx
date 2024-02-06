@@ -58,13 +58,24 @@ const EmployeeReportCreate = () => {
             .typeError("Please enter numeric characters")
           }),
           onSubmit:async values => {
-            await employeeReportService.AddEmployeeReport(values)
-            .then(res=>{
-                console.log(res)
-            })
-            .catch(err=>{
-                console.log(err)
-            })
+
+            //local
+            var employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
+            if(!employeeReports){
+              employeeReports = []
+            }
+            values.reportDate = new Date()
+            employeeReports.push(values)
+            localStorage.setItem('employeeReports', JSON.stringify(employeeReports))
+
+            // await employeeReportService.AddEmployeeReport(values) //Backend
+            // .then(res=>{
+            //     console.log(res)
+            // })
+            // .catch(err=>{
+            //     console.log(err)
+            // })
+
             navigate("/employeeReport")
           }
     })

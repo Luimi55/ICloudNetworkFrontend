@@ -20,7 +20,7 @@ export const EmployeeReportSlice = createSlice({
             newEmployeeReport.date = new Date().toLocaleDateString()
 
             state.employeeReportList = [...employeeReportList, newEmployeeReport]
-            console.log(state.employeeReportList)
+            //console.log(state.employeeReportList)
 
         },
     }

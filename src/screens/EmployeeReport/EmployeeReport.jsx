@@ -28,13 +28,19 @@ const EmployeeReport = () => {
     const employeeReportService = EmployeeReportService();
 
     useEffect(()=>{
-      employeeReportService.GetEmployeeReport()
-        .then(res=>{
-          setEmployeeReportList(res.data)
-        })
-        .catch(err=>{
-          console.log(res)
-        })
+      //local
+      const employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
+      if(employeeReports){
+        setEmployeeReportList(employeeReports)
+      }
+
+      // employeeReportService.GetEmployeeReport() Backend
+      //   .then(res=>{
+      //     setEmployeeReportList(res.data)
+      //   })
+      //   .catch(err=>{
+      //     console.log(res)
+      //   })
     },[])
 
     const getBaseUrl = () => {

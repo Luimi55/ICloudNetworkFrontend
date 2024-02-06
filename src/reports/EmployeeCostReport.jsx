@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { 
     Page, 
     Text, 
@@ -11,8 +11,26 @@ import {
 
 const EmployeeCostReport = () => {
 
-  const employeeReportList = useSelector((state)=>state.EmployeeReport.employeeReportList);
+  const [employeeReportList,setEmployeeReportList] = useState([])
   const companyDiscount = useSelector((state)=>state.CompanyDiscount.companyDiscount);
+
+  useEffect(()=>{
+    //local
+    const employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
+    if(employeeReports){
+      setEmployeeReportList(employeeReports)
+    }
+
+    // employeeReportService.GetEmployeeReport() Backend
+    //   .then(res=>{
+    //     setEmployeeReportList(res.data)
+    //   })
+    //   .catch(err=>{
+    //     console.log(res)
+    //   })
+  },[])
+
+
   const getTotalHours = () => {
     var totalhours = 0;
     employeeReportList.map(employeeReport=>
@@ -62,7 +80,6 @@ const EmployeeCostReport = () => {
       })
       return totalUs
   }
-  console.log(getTotalHours())
   return (
     <PDFViewer style={{width: "100%", minHeight: "100vh"}}>
         <Document>

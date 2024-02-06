@@ -79,8 +79,15 @@ const Signup = () => {
       }),
       onSubmit: values => {
         //userService.SignUp(values) BACKEND
-        localStorage.setItem('users', JSON.stringify(values))//Local
-        navigate("/")
+
+        var users = JSON.parse(localStorage.getItem('users')); //Local
+        if(!users){
+          users = []
+        }
+        users.push(values)
+        localStorage.setItem('users', JSON.stringify(users))
+
+        navigate("/login")
       }
 })
   return (
