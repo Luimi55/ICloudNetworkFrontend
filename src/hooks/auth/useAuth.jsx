@@ -10,7 +10,7 @@ const useAuth = () => {
     }
 
     const dropCookie = () =>{
-
+        Cookies.remove(COOKIE)
     }
 
     const isAuthenticated = () => {

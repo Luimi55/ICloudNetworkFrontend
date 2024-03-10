@@ -20,7 +20,7 @@ import {
 
 const Login = () => {
 
-    const {generate} = useGuid();
+    //const {generate} = useGuid();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {saveCookie} = useAuth();

@@ -15,24 +15,38 @@ import { Link } from 'react-router-dom';
 import {handleDrawerToggle} from '../redux/reducers/MenuSlice'
 import {useDispatch } from 'react-redux'
 import LinkApp from './LinkApp';
+import useAuth from '../hooks/auth/useAuth';
 
 const MenuDetail = () => {
   const dispatch = useDispatch()
+  const {dropCookie} = useAuth();
+
+  const logOut = () =>{
+    closeMenu();
+    dropCookie();
+  }
+
+  const closeMenu = () => {
+    dispatch(handleDrawerToggle())
+  }
 
   const list = [
     {
       text: "Home",
       link: "/",
+      action: closeMenu,
       icon: <HomeIcon/>
     },
     {
       text: "Employee Report",
       link: "employeeReport",
+      action: closeMenu,
       icon: <AccessTimeIcon/>
     },
     {
       text: "Configuration",
       link: "configuration",
+      action: closeMenu,
       icon: <SettingsIcon/>
     }
   ]
@@ -40,7 +54,8 @@ const MenuDetail = () => {
   const otherList = [
     {
       text: "Log Out",
-      link: "logOut",
+      link: "/login",
+      action: logOut,
       icon: <LogoutIcon/>
     }
   ]
@@ -58,7 +73,7 @@ const MenuDetail = () => {
       <Divider />
       <List>
         {list.map((item, index) => (
-          <LinkApp key={index} to={item.link} onClick={()=>dispatch(handleDrawerToggle())} color="black">
+          <LinkApp key={index} to={item.link} onClick={()=>item.action()} color="black">
             <ListItem  disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -73,7 +88,7 @@ const MenuDetail = () => {
       <Divider />
       <List>
         {otherList.map((item, index) => (
-          <LinkApp key={index} to={item.link} onClick={()=>dispatch(handleDrawerToggle())} color="black">
+          <LinkApp key={index} to={item.link} onClick={()=>item.action()} color="black">
             <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
