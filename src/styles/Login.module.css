@@ -4,8 +4,15 @@
     background-size: 100% 100%;
     /* background-color: #cccccc; */
 }
+
+@media only screen and (min-width: 1050px) {
+    .loginWith{
+        width: 30%;
+    }
+}
+
+
 .loginSection{
-    width: 40%;
     margin: 0;
     display: flex;
     justify-content: center;

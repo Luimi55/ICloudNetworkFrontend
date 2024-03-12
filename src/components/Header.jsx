@@ -58,7 +58,7 @@ const Header = ({name, hideMenuIcon}) => {
 
         </Toolbar>
         <Toolbar>
-          Hello, {user.given_name} {user.family_name}
+          {/* Hello, {user.given_name} {user.family_name} */}
         </Toolbar>
       </AppBar>
     </>

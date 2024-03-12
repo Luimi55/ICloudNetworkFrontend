@@ -77,13 +77,13 @@ const Login = () => {
         className={LoginStyles.backgroundImage}
     >
         <div
-            className={LoginStyles.loginSection}
+            className={LoginStyles.loginSection+" "+LoginStyles.loginWith}
         >
             <p className={LoginStyles.logo}>ICloudNetworking</p>
             <Grid 
             container
             direction="row"
-            width='50%'
+            width='100%'
             spacing={3}
             >
                 <Grid item xs={12}>
@@ -119,8 +119,7 @@ const Login = () => {
                         variant="contained" 
                         color="primary"
                         sx={{
-                            paddingRight: '42%',
-                            paddingLeft: '42%',
+                            width: "100%",
                             paddingTop: '2%',
                             paddingBottom: '2%'
                         }}
