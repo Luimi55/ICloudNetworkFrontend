@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {
   Button,
+  Alert,
+  Snackbar
 } from '@mui/material';
 import Header from '../../components/Header'
 import Styles from '../../styles/General.module.css'
@@ -20,12 +22,17 @@ import Styles from '../../styles/General.module.css'
     PDFViewer
   } from '@react-pdf/renderer';
   import EmployeeReportService from '../../services/EmployeeReportService';
+  import useMobile from '../../hooks/useMobile';
 
 const EmployeeReport = () => {
 
     const [employeeReportList,setEmployeeReportList] = useState([])
 
+    const [openMobileAlert, setOpenMobileAlert] = useState(false)
+
     const employeeReportService = EmployeeReportService();
+
+    const mobile = useMobile();
 
     useEffect(()=>{
       //local
@@ -42,6 +49,23 @@ const EmployeeReport = () => {
       //     console.log(res)
       //   })
     },[])
+
+    const reportValidation = () => {
+
+      const isMobile = mobile.isMobile;
+      if(isMobile){
+        setOpenMobileAlert(true)
+      }
+      
+    }
+
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpenMobileAlert(false);
+    };
 
     const getBaseUrl = () => {
       return location.protocol + '//' + location.host;
@@ -131,7 +155,7 @@ const EmployeeReport = () => {
             </Button> 
         </PDFDownloadLink> */}
 
-        <LinkApp to={"/employeeReport/report"} color="white">
+        <LinkApp to={mobile.isMobile?"":"/employeeReport/report"} color="white" onClick={()=>reportValidation()}>
           <Button
               variant="contained"
               color="confirm"
@@ -162,11 +186,28 @@ const EmployeeReport = () => {
         autoHeight = {true}
         pageSizeOptions={[5, 10]}
         />
+
+
+      <Snackbar
+        open={openMobileAlert}
+        anchorOrigin={{ vertical:"top", horizontal:"center" }}
+        autoHideDuration={4000}
+        onClose={handleClose}
+        >
+        <Alert
+          severity="warning"
+          sx={{ width: '100%' }}
+        >
+          Not available in mobile
+        </Alert>
+      </Snackbar>
+      {/* <Alert severity="error">This is an error Alert.</Alert> */}
       </div>
 
       {/* <PDFViewer style={{width: "100%", height: "90vh"}}>
         <EmployeeCostReport employeeReportList={employeeReportList}/>
         </PDFViewer> */}
+
     </div>
   )
 }
