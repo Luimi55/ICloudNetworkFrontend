@@ -72,6 +72,12 @@ const Login = () => {
             // })
           }
     })
+
+    const passwordKeyDown = (e) => {
+        if(e.keyCode == 13){
+            formik.handleSubmit();
+        }
+    }
   return (
     <div
         className={LoginStyles.backgroundImage}
@@ -105,6 +111,7 @@ const Login = () => {
                         error={formik.errors.password?true:false}
                         value={formik.values.password} 
                         onChange={formik.handleChange('password')}
+                        onKeyDown={passwordKeyDown}
                         helperText={formik.errors.password}
                         sx={{
                             width:'100%'
