@@ -36,7 +36,12 @@ const EmployeeReport = () => {
 
     useEffect(()=>{
       //local
-      const employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
+       let localStorageEmployeeReports = localStorage.getItem('employeeReports');
+      // if(localStorageEmployeeReports == ""){
+      //   localStorageEmployeeReports = "[]"
+      //   localStorage.setItem('employeeReports',localStorageEmployeeReports)
+      // }
+      const employeeReports = JSON.parse(localStorageEmployeeReports);
       if(employeeReports){
         setEmployeeReportList(employeeReports)
       }
@@ -67,6 +72,14 @@ const EmployeeReport = () => {
       setOpenMobileAlert(false);
     };
 
+    const handleDeleteClick = (id) => {
+      //Local
+      let employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
+      employeeReports = employeeReports.filter(empRep=>empRep.orderId!=id)
+      localStorage.setItem('employeeReports', JSON.stringify(employeeReports))
+      setEmployeeReportList(employeeReports)
+    }
+
     const getBaseUrl = () => {
       return location.protocol + '//' + location.host;
     }
@@ -93,13 +106,13 @@ const EmployeeReport = () => {
               icon={<EditIcon />}
               label="Edit"
               className="textPrimary"
-              //onClick={handleEditClick(id)}
+              onClick={handleEditClick(id)}
               color="inherit"
             />,
             <GridActionsCellItem
               icon={<DeleteIcon />}
               label="Delete"
-              //onClick={handleDeleteClick(id)}
+              onClick={()=>handleDeleteClick(id)}
               color="inherit"
             />,
           ];
