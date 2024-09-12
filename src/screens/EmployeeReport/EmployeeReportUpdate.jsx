@@ -79,7 +79,11 @@ const EmployeeReportUpdate = () => {
             var employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
             const newEmployeeReport = employeeReports.map(empRep=>{
                 if(empRep.orderId == values.orderId){
-                    return {...values, reportDate: empRep.reportDate}
+                    return {
+                        ...values,
+                         reportDate: empRep.reportDate,
+                         userEmail: empRep.userEmail
+                        }
                 } else {
                     return empRep
                 }

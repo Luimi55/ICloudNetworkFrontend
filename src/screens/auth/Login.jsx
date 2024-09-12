@@ -46,13 +46,14 @@ const Login = () => {
             //local
             const users = JSON.parse(localStorage.getItem('users'));
             if (users) {
-                const foundUser = users.filter(user=>user.email == values.email &&user.password==values.password)
-                if(foundUser.length > 0){
+                const foundUser = users.find(user=>user.email == values.email &&user.password==values.password)
+                if(foundUser){
                     //const token = generate();
                     saveCookie({
                         token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NTEwMTZhYy1lMmZhLTRhNjAtMWFmZi0wOGRjMDI3ODdhMWIiLCJnaXZlbl9uYW1lIjoiVGVzdCIsImZhbWlseV9uYW1lIjoiVGVzdCIsInVuaXF1ZV9uYW1lIjoiNSIsImdlbmRlciI6IlRydWUiLCJpc3MiOiJJQ2xvdWROZXR3b3JraW5nIiwiYXVkIjoiRW1wbG95ZWVycyJ9.vjqbaVMdD4sra1_0tu8Te3oTWgqzrpMROoaQR0-IGXo",
                         expires: 1,
                     })
+                    localStorage.setItem('currentUser', foundUser.email)
                     navigate("/")
                 }
             }

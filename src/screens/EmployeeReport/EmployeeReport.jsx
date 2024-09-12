@@ -44,7 +44,9 @@ const EmployeeReport = () => {
       //   localStorageEmployeeReports = "[]"
       //   localStorage.setItem('employeeReports',localStorageEmployeeReports)
       // }
-      const employeeReports = JSON.parse(localStorageEmployeeReports);
+      let currentUser = localStorage.getItem('currentUser');
+      let employeeReports = JSON.parse(localStorageEmployeeReports);
+      employeeReports = employeeReports.filter(empRep=>empRep.userEmail == currentUser)
       if(employeeReports){
         setEmployeeReportList(employeeReports)
       }

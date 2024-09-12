@@ -20,7 +20,6 @@ const EmployeeReportCreate = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const employeeReportService = EmployeeReportService();
 
     const formik = useFormik({
@@ -65,6 +64,7 @@ const EmployeeReportCreate = () => {
               employeeReports = []
             }
             values.reportDate = new Date()
+            values.userEmail = localStorage.getItem('currentUser')
             employeeReports.push(values)
             localStorage.setItem('employeeReports', JSON.stringify(employeeReports))
 
