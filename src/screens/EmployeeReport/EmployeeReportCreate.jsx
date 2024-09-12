@@ -15,6 +15,7 @@ import {addEmployeeReport} from '../../redux/reducers/EmployeeReportSlice'
 import LinkApp from '../../components/LinkApp';
 import { useNavigate } from "react-router-dom";
 import EmployeeReportService from '../../services/EmployeeReportService';
+import Swal from 'sweetalert2';
 
 const EmployeeReportCreate = () => {
 
@@ -75,8 +76,11 @@ const EmployeeReportCreate = () => {
             // .catch(err=>{
             //     console.log(err)
             // })
-
             navigate("/employeeReport")
+            Swal.fire({
+                title: "Report added successfully!",
+                icon: "success"
+              });
           }
     })
 

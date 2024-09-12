@@ -24,6 +24,7 @@ import Styles from '../../styles/General.module.css'
   import EmployeeReportService from '../../services/EmployeeReportService';
   import useMobile from '../../hooks/useMobile';
   import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const EmployeeReport = () => {
 
@@ -79,10 +80,28 @@ const EmployeeReport = () => {
 
     const handleDeleteClick = (id) => {
       //Local
-      let employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
-      employeeReports = employeeReports.filter(empRep=>empRep.orderId!=id)
-      localStorage.setItem('employeeReports', JSON.stringify(employeeReports))
-      setEmployeeReportList(employeeReports)
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to remove this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
+          employeeReports = employeeReports.filter(empRep=>empRep.orderId!=id)
+          localStorage.setItem('employeeReports', JSON.stringify(employeeReports))
+          setEmployeeReportList(employeeReports)
+          Swal.fire({
+            title: "Deleted!",
+            text: "Report has been deleted.",
+            icon: "success"
+          });
+        }
+      });
+
     }
 
     const handleEditClick = (id) => {

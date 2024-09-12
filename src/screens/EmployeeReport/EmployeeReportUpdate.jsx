@@ -16,6 +16,7 @@ import LinkApp from '../../components/LinkApp';
 import { useNavigate } from "react-router-dom";
 import EmployeeReportService from '../../services/EmployeeReportService';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const EmployeeReportUpdate = () => {
 
@@ -98,7 +99,10 @@ const EmployeeReportUpdate = () => {
             // // .catch(err=>{
             // //     console.log(err)
             // // })
-
+            Swal.fire({
+                title: "Report updated successfully!",
+                icon: "success"
+              });
             navigate("/employeeReport")
           }
     })
