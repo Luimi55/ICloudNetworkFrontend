@@ -23,6 +23,7 @@ import Styles from '../../styles/General.module.css'
   } from '@react-pdf/renderer';
   import EmployeeReportService from '../../services/EmployeeReportService';
   import useMobile from '../../hooks/useMobile';
+  import { useNavigate } from "react-router-dom";
 
 const EmployeeReport = () => {
 
@@ -31,6 +32,8 @@ const EmployeeReport = () => {
     const [openMobileAlert, setOpenMobileAlert] = useState(false)
 
     const employeeReportService = EmployeeReportService();
+
+    const navigate = useNavigate();
 
     const mobile = useMobile();
 
@@ -80,6 +83,14 @@ const EmployeeReport = () => {
       setEmployeeReportList(employeeReports)
     }
 
+    const handleEditClick = (id) => {
+      //Local
+      // let employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
+      // employeeReports = employeeReports.filter(empRep=>empRep.orderId!=id)
+      // localStorage.setItem('employeeReports', JSON.stringify(employeeReports))
+      // setEmployeeReportList(employeeReports)
+    }
+
     const getBaseUrl = () => {
       return location.protocol + '//' + location.host;
     }
@@ -102,13 +113,15 @@ const EmployeeReport = () => {
         getActions: ({ id }) => {
   
           return [
+            // <LinkApp to={`/employeeReport/update/${id}`} color="black">
             <GridActionsCellItem
-              icon={<EditIcon />}
+              icon={<EditIcon/>}
               label="Edit"
               className="textPrimary"
-              onClick={handleEditClick(id)}
+              onClick={()=>navigate(`/employeeReport/update/${id}`)}
               color="inherit"
             />,
+          // </LinkApp>,
             <GridActionsCellItem
               icon={<DeleteIcon />}
               label="Delete"
