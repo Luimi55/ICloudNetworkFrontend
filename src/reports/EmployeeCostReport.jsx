@@ -87,7 +87,7 @@ const EmployeeCostReport = () => {
         <Document>
           <Page style={styles.body} orientation='landscape'>
             <View>
-              <Text>MODULO DE REPORTES DE HORA</Text>
+              <Text>TIME REPORTING MODULE</Text>
             </View>
             <View style={styles.table}> 
               <View style={styles.tableRow}> 
@@ -136,7 +136,7 @@ const EmployeeCostReport = () => {
                   <View key={key} style={styles.tableRow}> 
 
                     <View style={styles.tableCol}>
-                      <Text style={styles.tableCell}>{report.date}</Text> 
+                      <Text style={styles.tableCell}>{report.reportDate}</Text> 
                     </View>
                     <View style={styles.tableCol}>
                       <Text style={styles.tableCell}>{report.orderId}</Text> 
