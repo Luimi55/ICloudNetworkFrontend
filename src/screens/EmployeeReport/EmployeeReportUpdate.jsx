@@ -108,7 +108,7 @@ const EmployeeReportUpdate = () => {
     })
 
   return (
-    <div
+<div
         className={Styles.screenBody}
     >
         <Header name={"Add Report"} hideMenuIcon={true}/>
@@ -122,7 +122,7 @@ const EmployeeReportUpdate = () => {
                 textAlign: 'center'
             }}
         >
-            <Grid item xs={4}>
+            <Grid item xs={6} md={4}>
                 <TextField
                  error={formik.errors.orderId?true:false}
                  label="Order Id" 
@@ -132,7 +132,7 @@ const EmployeeReportUpdate = () => {
                 helperText={formik.errors.orderId}
                 />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6} md={4}>
                 <TextField
                 error={formik.errors.cost?true:false}
                  label="Cost" 
@@ -142,7 +142,7 @@ const EmployeeReportUpdate = () => {
                  helperText={formik.errors.cost}
                 />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6} md={4}>
                 <TextField
                 error={formik.errors.hours?true:false}
                  label="Hours" 
@@ -152,7 +152,7 @@ const EmployeeReportUpdate = () => {
                  helperText={formik.errors.hours}
                 />
             </Grid>
-            <Grid item xs={4}> 
+            <Grid item xs={6} md={4}> 
             <TextField
                 error={formik.errors.materials?true:false}
                  label="Materials" 
@@ -162,7 +162,7 @@ const EmployeeReportUpdate = () => {
                  helperText={formik.errors.materials}
                 />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6} md={4}>
             <TextField
                 error={formik.errors.parking?true:false}
                  label="Parking" 
@@ -172,7 +172,7 @@ const EmployeeReportUpdate = () => {
                  helperText={formik.errors.parking}
                 />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6} md={4}>
             <TextField
                 error={formik.errors.toll?true:false}
                  label="TOLL" 
@@ -182,7 +182,7 @@ const EmployeeReportUpdate = () => {
                  helperText={formik.errors.toll}
                 />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} md={6}>
             <TextField
                  error={formik.errors.milla?true:false}
                  label="Milla" 
@@ -192,7 +192,7 @@ const EmployeeReportUpdate = () => {
                  helperText={formik.errors.milla}
                 />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} md={6}>
             <TextField
                  error={formik.errors.others?true:false}
                  label="Others" 
@@ -202,20 +202,20 @@ const EmployeeReportUpdate = () => {
                  helperText={formik.errors.others}
                 />
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={0} md={8}>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={12} md={1}>
                 {/* <LinkApp to={"/home"} color="white"> */}
                     <Button 
                     variant="contained" 
                     color="success"
                     onClick={formik.handleSubmit}
                     >
-                        Update
+                        Add
                     </Button>
                 {/* </LinkApp> */}
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={12} md={1}>
             <Link to={"/employeeReport"}  style={{ textDecoration: 'none', color:'white' }}>
                 <Button 
                 variant="contained" 
