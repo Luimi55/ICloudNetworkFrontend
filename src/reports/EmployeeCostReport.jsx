@@ -16,7 +16,9 @@ const EmployeeCostReport = () => {
 
   useEffect(()=>{
     //local
-    const employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
+    let employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
+    let currentUser = localStorage.getItem('currentUser');
+    employeeReports = employeeReports.filter(empRep=>empRep.userEmail == currentUser)
     if(employeeReports){
       setEmployeeReportList(employeeReports)
     }
