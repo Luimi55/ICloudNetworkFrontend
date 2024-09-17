@@ -86,6 +86,9 @@ const Login = () => {
         <div
             className={LoginStyles.loginSection+" "+LoginStyles.loginWith}
         >
+            <p className={LoginStyles.warning}>Warning: This application have been designed exclusively for demonstration purposes in my portfolio,
+                therefore is not connected to his <a href='https://github.com/Luimi55/ICloudNetworkAppBackend'>backend</a>, 
+                instead use local storage.</p>
             <p className={LoginStyles.logo}>ICloudNetworking</p>
             <Grid 
             container

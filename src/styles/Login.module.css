@@ -24,6 +24,10 @@
 .logo{
     font-size:30px;
 }
+.warning{
+    color: rgb(224, 36, 36);
+    text-align: center;
+}
 .loginButton{
     padding-left: 5%;
     margin: 100px;
