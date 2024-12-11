@@ -25,7 +25,7 @@ function App() {
     <>
       <Provider store={Store}>
         <ThemeProvider theme={Theme}>
-            <BrowserRouter>
+            <BrowserRouter basename="/ICloudNetworkFrontend">
               <CssBaseline />
               <Menu/>  
               <Routes>
