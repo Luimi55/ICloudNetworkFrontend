@@ -47,9 +47,11 @@ const EmployeeReport = () => {
       // }
       let currentUser = localStorage.getItem('currentUser');
       let employeeReports = JSON.parse(localStorageEmployeeReports);
-      employeeReports = employeeReports.filter(empRep=>empRep.userEmail == currentUser)
       if(employeeReports){
-        setEmployeeReportList(employeeReports)
+        employeeReports = employeeReports.filter(empRep=>empRep.userEmail == currentUser)
+        if(employeeReports){
+          setEmployeeReportList(employeeReports)
+        }
       }
 
       // employeeReportService.GetEmployeeReport() Backend
