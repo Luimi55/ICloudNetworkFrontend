@@ -4,10 +4,10 @@ import HomeIcon from '@mui/icons-material/Home';
 
 const DashBoardCard = (props) => {
 
-    const {icon, title, color, sx, value } = props;
+    const {icon, title, color, size, value } = props;
 
   return (
-    <Card sx={sx}>
+    <Card size={size}>
         <CardContent>
             <Stack
             alignItems="flex-start"

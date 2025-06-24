@@ -86,17 +86,14 @@ const Login = () => {
         <div
             className={LoginStyles.loginSection+" "+LoginStyles.loginWith}
         >
-            <p className={LoginStyles.warning}>Warning: This application have been designed exclusively for demonstration purposes in my portfolio,
-                therefore is not connected to his <a href='https://github.com/Luimi55/ICloudNetworkAppBackend'>backend</a>, 
-                instead use local storage.</p>
             <p className={LoginStyles.logo}>ICloudNetworking</p>
             <Grid 
             container
-            direction="row"
             width='100%'
+            padding={5}
             spacing={3}
             >
-                <Grid item xs={12}>
+                <Grid item size={12}>
                         <TextField
                         label="Email" 
                         error={formik.errors.email?true:false}
@@ -108,7 +105,7 @@ const Login = () => {
                         }}
                         />
                 </Grid>
-                <Grid item xs={12} sx={{alignItems:'center',justifyContent:'center'}}>
+                <Grid item size={12} sx={{alignItems:'center',justifyContent:'center'}}>
                         <TextField
                         label="Password" 
                         type='password'
@@ -125,7 +122,7 @@ const Login = () => {
                         
                         <span className={LoginStyles.signupLine}>Do not have an account? <Link  href="signup">Sign Up</Link></span>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item size={12}>
                     <Button 
                         variant="contained" 
                         color="primary"

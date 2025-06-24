@@ -100,15 +100,13 @@ const Signup = () => {
         <p className={SignupStyles.title}>Sign up</p>
         <Grid 
             container
-            direction="row"
+            direction="column"
             alignItems="center"
             justifyContent="center"
             spacing={3}
-            sx={{
-                //textAlign: 'center'
-            }}
+
             >
-              <Grid item xs={12}>
+              <Grid item size={12}>
                 <TextField
                 label="First Name" 
                 error={formik.errors.firstName?true:false}
@@ -120,7 +118,7 @@ const Signup = () => {
                 }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item size={12}>
                 <TextField
                 label="Last Name"
                 error={formik.errors.lastName?true:false}
@@ -132,7 +130,7 @@ const Signup = () => {
                 }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item size={12}>
                 <TextField
                 label="Email" 
                 error={formik.errors.email?true:false}
@@ -144,7 +142,7 @@ const Signup = () => {
                 }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item size={12}>
                 <TextField
                 label="Password" 
                 type='password'
@@ -157,7 +155,7 @@ const Signup = () => {
                 }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item size={12}>
                 <FormControl fullWidth>
                   <InputLabel
                   error={formik.errors.role?true:false}
@@ -180,16 +178,10 @@ const Signup = () => {
                 </FormControl>
                 <span className={SignupStyles.loginLine}>Already have an account? <Link  href="/">Log in</Link></span>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item>
                   <Button 
-                    variant="contained" 
-                    color="primary"
-                    sx={{
-                        paddingRight: '42%',
-                        paddingLeft: '42%',
-                        paddingTop: '2%',
-                        paddingBottom: '2%'
-                    }}
+                      variant="contained" 
+                      color="primary"
                       onClick={formik.handleSubmit}
                     >
                         Signup

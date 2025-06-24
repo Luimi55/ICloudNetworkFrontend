@@ -36,3 +36,7 @@
 .signupLine{
     display: block;
 }
+
+.formInput{
+    width: 100%;
+}

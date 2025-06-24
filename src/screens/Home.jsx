@@ -34,10 +34,11 @@ const Home = () => {
           >
           <Grid
           item
-              xs={12}
-              sm={6}
-              lg={3}
-
+          size={{
+              xs:12,
+              sm:6,
+              lg:3
+          }}
             >
               <DashboardCard
                     title="Total Employees"
@@ -49,9 +50,11 @@ const Home = () => {
             </Grid>
             <Grid
             item
-              xs={12}
-              sm={6}
-              lg={3}
+            size={{
+                xs:12,
+                sm:6,
+                lg:3
+            }}
             >
               <DashboardCard
                     title="Budget"
@@ -63,9 +66,11 @@ const Home = () => {
             </Grid>
             <Grid
             item
-              xs={12}
-              sm={6}
-              lg={3}
+            size={{
+                xs:12,
+                sm:6,
+                lg:3
+            }}
             >
               <DashboardCard
                     title="Budget"
@@ -77,9 +82,11 @@ const Home = () => {
             </Grid>
             <Grid
             item
-              xs={12}
-              sm={6}
-              lg={3}
+            size={{
+                xs:12,
+                sm:6,
+                lg:3
+            }}
             >
               <DashboardCard
                     title="Budget"
@@ -91,15 +98,20 @@ const Home = () => {
             </Grid>
             <Grid
             item
-            xs={12}
-            lg={8}
+            size={{
+                xs:12,
+                lg:8
+            }}
+
             >
               <BarChartDash/>
             </Grid>
             <Grid
             item
-            xs={12}
-            lg={4}
+            size={{
+                xs:12,
+                lg:4
+            }}
             >
               <PieCharDash/>
             </Grid>

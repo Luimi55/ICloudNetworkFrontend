@@ -59,7 +59,7 @@ const Configuration = () => {
                 textAlign: 'center'
             }}
         >
-            <Grid item xs={12}>
+            <Grid item size={12}>
                 <TextField
                 error={formik.errors.companyDiscount?true:false}
                 label="Company Discount" 
@@ -69,7 +69,7 @@ const Configuration = () => {
                 helperText={formik.errors.companyDiscount}
                 />      
             </Grid>
-            <Grid item xs={12}>
+            <Grid item size={12}>
                 <Button 
                     variant="contained" 
                     color="success"
