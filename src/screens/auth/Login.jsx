@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import GeneralStyles from '../../styles/General.module.css'
 import LoginStyles from '../../styles/Login.module.css'
 import { useFormik } from 'formik' 
@@ -8,6 +8,7 @@ import { setUser } from '../../redux/reducers/UserSlice';
 import {useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import useAuth from '../../hooks/auth/useAuth';
+import Loading from '../../components/loading';
 // import {useSignIn} from 'react-auth-kit'
 import {
     Grid,
@@ -24,6 +25,7 @@ const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {saveCookie} = useAuth();
+    const [showLoading, setShowLoading] = useState(false);
 
 
     const userService = UserService();
@@ -43,9 +45,10 @@ const Login = () => {
             .required("This field is required")
           }),
           onSubmit: async values => {
-
+            setShowLoading(true)
             await userService.LogIn(values)
             .then(res=>{
+                setShowLoading(false)
                 const token = res.data;
                 saveCookie({
                     token: token,
@@ -54,6 +57,7 @@ const Login = () => {
                 navigate("/")
             })
             .catch(err=>{
+                setShowLoading(false)
                 console.log(err)
             })
           }
@@ -124,6 +128,8 @@ const Login = () => {
 
             </Grid>
         </div>
+        
+        <Loading show={showLoading}/>
         
     </div>
   )
