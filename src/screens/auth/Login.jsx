@@ -9,7 +9,8 @@ import {useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import useAuth from '../../hooks/auth/useAuth';
 import Loading from '../../components/loading';
-// import {useSignIn} from 'react-auth-kit'
+import Swal from 'sweetalert2';
+import genericErrorAlert from '../../components/Alerts/GenericErrorAlert';
 import {
     Grid,
     TextField,
@@ -57,6 +58,7 @@ const Login = () => {
                 navigate("/")
             })
             .catch(err=>{
+                genericErrorAlert(err.code)
                 setShowLoading(false)
                 console.log(err)
             })
