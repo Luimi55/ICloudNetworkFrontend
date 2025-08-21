@@ -29,7 +29,7 @@ const UserService = () => {
     const LogIn = async (user) => {
         return await axios({
             method: 'post',
-            url: `${API_URL}/Auth/LogIn`,
+            url: `${API_URL}/User/LogIn`,
             data: {
                 email: user.email,
                 password: user.password
