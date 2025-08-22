@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import UserService from '../../services/UserService';
 import RoleService from '../../services/RoleService'
 import { useNavigate } from "react-router-dom";
+import Loading from '../../components/loading';
 import {
   Grid,
   TextField,
@@ -16,6 +17,8 @@ import {
   Button,
   Link
 } from '@mui/material';
+import SucessfulAlert from '../../components/Alerts/SucessfulAlert';
+import ErrorAlert from '../../components/Alerts/ErrorAlert';
 
 const Signup = () => {
 
@@ -23,21 +26,9 @@ const Signup = () => {
 
   const userService = UserService();
   const roleService=  RoleService();
+  const [showLoading, setShowLoading] = useState(false);
 
   //const [roles,setRoles] = useState([]) Backend
-
-  //Local
-  const [roles,setRoles] = useState([
-    {
-      id: 1,
-      name: 'Technician',
-    },
-    {
-      id: 2,
-      name: 'Supervisor'
-    }
-  ])
-
 
   useEffect(()=>{
 
@@ -57,7 +48,7 @@ const Signup = () => {
         lastName: '',
         email: '',
         password: '',
-        role: '',
+        // role: '',
       },
       validationSchema:Yup.object({
         firstName: Yup.string()
@@ -73,21 +64,24 @@ const Signup = () => {
         password: Yup.string()
         .max(256, "Enter less than 256 characters")
         .required("This field is required"),
-        role: Yup.string()
-        .max(30, "Enter less than 30 characters")
-        .required("This field is required"),
+        // role: Yup.string()
+        // .max(30, "Enter less than 30 characters")
+        // .required("This field is required"),
       }),
       onSubmit: values => {
-        //userService.SignUp(values) BACKEND
+        setShowLoading(true)
+        userService.SignUp(values)
+        .then(res=>{
+          setShowLoading(false)
+          SucessfulAlert()
+        })
+        .catch(err=>{
+          ErrorAlert(err)
+          setShowLoading(false)
+          console.log(err)
+        })
 
-        var users = JSON.parse(localStorage.getItem('users')); //Local
-        if(!users){
-          users = []
-        }
-        users.push(values)
-        localStorage.setItem('users', JSON.stringify(users))
-
-        navigate("/login")
+        // navigate("/login")
       }
 })
   return (
@@ -154,8 +148,9 @@ const Signup = () => {
                     width:'100%'
                 }}
                 />
+                <span className={SignupStyles.loginLine}>Already have an account? <Link  href="/">Log in</Link></span>
               </Grid>
-              <Grid item size={12}>
+              {/* <Grid item size={12}>
                 <FormControl fullWidth>
                   <InputLabel
                   error={formik.errors.role?true:false}
@@ -176,8 +171,7 @@ const Signup = () => {
                       }
                     </Select>
                 </FormControl>
-                <span className={SignupStyles.loginLine}>Already have an account? <Link  href="/">Log in</Link></span>
-              </Grid>
+              </Grid> */}
               <Grid item>
                   <Button 
                       variant="contained" 
@@ -190,6 +184,7 @@ const Signup = () => {
             
           </Grid>
       </div>
+      <Loading show={showLoading}/>
     </div>
   )
 }
