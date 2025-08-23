@@ -9,6 +9,10 @@ const useAuth = () => {
         Cookies.set(COOKIE, cookie.token, { expires: cookie.expires })
     }
 
+    const getCookie = () =>{
+        return Cookies.get(COOKIE)
+    }
+
     const dropCookie = () =>{
         Cookies.remove(COOKIE)
     }
@@ -20,6 +24,7 @@ const useAuth = () => {
 
     return {
         saveCookie,
+        getCookie,
         dropCookie,
         isAuthenticated
     }

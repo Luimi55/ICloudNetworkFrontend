@@ -1,8 +1,10 @@
 import React from 'react'
 import axios from 'axios'
+import useAuth from '../hooks/auth/useAuth';
 
 const UserService = () => {
     const API_URL = import.meta.env.VITE_API_URL
+    const {getCookie} = useAuth();
 
     const  SignUp = async (user) =>{
         return await axios({
@@ -28,9 +30,20 @@ const UserService = () => {
         })
     }
 
+    const UserInfo = async () => {
+        return await axios({
+            method: 'get',
+            headers: {
+                'Authorization': `Bearer ${getCookie()}`
+            },
+            url: `${API_URL}/User/UserInfo`,
+        })
+    }
+
     return {
         SignUp,
-        LogIn
+        LogIn,
+        UserInfo
       }
 
 }

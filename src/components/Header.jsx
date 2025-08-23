@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import AppBar from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -12,15 +12,21 @@ import {
   Stack,
 } from '@mui/material';
 import Cookies from 'js-cookie';
-import { jwtDecode } from "jwt-decode";
 
 
 const Header = ({name, hideMenuIcon}) => {
     const drawerWidth = Constants.drawerWidth;
     const headerHeight = Constants.headerHeight;
     const COOKIE = import.meta.env.VITE_SECRET_COOKIE
-    const user = jwtDecode(Cookies.get(COOKIE));
     const dispatch = useDispatch()
+    const [user, setUser] = useState({})
+
+  useEffect(()=>{
+    const userLocalStorage = localStorage.getItem(import.meta.env.VITE_USER_INFO)
+    const userData = JSON.parse( userLocalStorage )
+    setUser(userData)
+  },[])
+
   return (
     <>
       <AppBar
@@ -50,15 +56,10 @@ const Header = ({name, hideMenuIcon}) => {
               {name}
               
             </Typography>
-            {/* <Typography variant="h6" component="div">
-              
-              
-            </Typography> */}
-
 
         </Toolbar>
         <Toolbar>
-          {/* Hello, {user.given_name} {user.family_name} */}
+          Welcome {user.firstName} {user.lastName}!
         </Toolbar>
       </AppBar>
     </>

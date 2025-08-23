@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { use, useState } from 'react'
 import GeneralStyles from '../../styles/General.module.css'
 import LoginStyles from '../../styles/Login.module.css'
 import { useFormik } from 'formik' 
@@ -27,7 +27,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const {saveCookie} = useAuth();
     const [showLoading, setShowLoading] = useState(false);
-
+    const userInfoLocalStorage = import.meta.env.VITE_USER_INFO
 
     const userService = UserService();
 
@@ -46,22 +46,34 @@ const Login = () => {
             .required("This field is required")
           }),
           onSubmit: async values => {
-            setShowLoading(true)
-            await userService.LogIn(values)
-            .then(res=>{
+            try{
+
+                setShowLoading(true)
+                const res = await userService.LogIn(values)
                 setShowLoading(false)
                 const token = res.data;
                 saveCookie({
                     token: token,
                     expires: 1,
                 })
+
+                const userInfoRes = await userService.UserInfo()
+                const userInfoData = JSON.stringify(userInfoRes.data)
+                localStorage.setItem(userInfoLocalStorage, userInfoData)
+
                 navigate("/")
-            })
-            .catch(err=>{
+            } catch(err){
                 errorAlert(err)
                 setShowLoading(false)
                 console.log(err)
-            })
+            }
+
+            // })
+            // .catch(err=>{
+            //     errorAlert(err)
+            //     setShowLoading(false)
+            //     console.log(err)
+            // })
           }
     })
 
@@ -70,6 +82,20 @@ const Login = () => {
             formik.handleSubmit();
         }
     }
+
+    const OnLoginSuccess = (res)=>{
+        const token = res.data;
+        saveCookie({
+            token: token,
+            expires: 1,
+        })
+        // userService.UserInfo()
+        // .then(res=>{
+
+        // })
+        navigate("/")
+    }
+
   return (
     <div
         className={LoginStyles.backgroundImage}
