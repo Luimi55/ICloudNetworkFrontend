@@ -40,10 +40,21 @@ const UserService = () => {
         })
     }
 
+    const GetUsersByRole = async (roleId) => {
+        return await axios({
+            method: 'get',
+            headers: {
+                'Authorization': `Bearer ${getCookie()}`
+            },
+            url: `${API_URL}/User/GetUsersByRole?roleId=`+roleId,
+        })
+    }
+
     return {
         SignUp,
         LogIn,
-        UserInfo
+        UserInfo,
+        GetUsersByRole
       }
 
 }

@@ -15,6 +15,7 @@ import EmployeeReportCreate from './screens/EmployeeReport/EmployeeReportCreate'
 import EmployeeReportUpdate from './screens/EmployeeReport/EmployeeReportUpdate';
 import EmployeeCostReport from './reports/EmployeeCostReport';
 import Configuration from './screens/Configuration';
+import TechnicianList from './screens/TechnicianReport/TechnicianList';
 import RequireAuth from './hooks/auth/RequireAuth';
 import Login from './screens/auth/Login'
 import Signup from './screens/auth/Signup'
@@ -38,6 +39,7 @@ function App() {
                   <Route path='/employeeReport/create' Component={EmployeeReportCreate}/>
                   <Route path='/employeeReport/update/:id' Component={EmployeeReportUpdate}/>
                   <Route path='/employeeReport/report' Component={EmployeeCostReport}/>
+                  <Route path='/technicianReport/list' Component={TechnicianList}/>
                   <Route path='/configuration' Component={Configuration}/>
                 </Route>
               </Routes>

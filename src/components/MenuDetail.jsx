@@ -10,6 +10,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Typography from '@mui/material/Typography';
 import SettingsIcon from '@mui/icons-material/Settings';
+import EngineeringIcon from '@mui/icons-material/Engineering';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
 import {handleDrawerToggle} from '../redux/reducers/MenuSlice'
@@ -44,10 +45,10 @@ const MenuDetail = () => {
       icon: <AccessTimeIcon/>
     },
     {
-      text: "Configuration",
-      link: "configuration",
+      text: "Technician Report",
+      link: "technicianReport/list",
       action: closeMenu,
-      icon: <SettingsIcon/>
+      icon: <EngineeringIcon/>
     }
   ]
 

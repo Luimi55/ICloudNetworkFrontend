@@ -136,7 +136,6 @@ const EmployeeReport = () => {
         getActions: ({ id }) => {
   
           return [
-            // <LinkApp to={`/employeeReport/update/${id}`} color="black">
             <GridActionsCellItem
               icon={<EditIcon/>}
               label="Edit"
@@ -144,7 +143,6 @@ const EmployeeReport = () => {
               onClick={()=>navigate(`/employeeReport/update/${id}`)}
               color="inherit"
             />,
-          // </LinkApp>,
             <GridActionsCellItem
               icon={<DeleteIcon />}
               label="Delete"
