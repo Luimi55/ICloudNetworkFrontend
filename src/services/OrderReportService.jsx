@@ -3,7 +3,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import { jwtDecode } from "jwt-decode";
 
-const EmployeeReportService = () => {
+const OrderReportService = () => {
     const API_URL = import.meta.env.VITE_API_URL
     const COOKIE = import.meta.env.VITE_SECRET_COOKIE
 
@@ -44,4 +44,4 @@ const EmployeeReportService = () => {
     }
 }
 
-export default EmployeeReportService
+export default OrderReportService

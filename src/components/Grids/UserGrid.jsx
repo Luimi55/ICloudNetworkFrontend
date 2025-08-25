@@ -45,7 +45,7 @@ const UserGrid = ({users}) => {
     ];
 
     const handleAction=(event, id)=>{
-// navigate(`/employeeReport/update/${id}`)
+
     setAnchorEl(event.currentTarget);
     setShowMenu(!showMenu)
     // console.log(id)
@@ -57,7 +57,8 @@ const UserGrid = ({users}) => {
     };
 
     const handleOrderOption = ()=>{
-        handleClose()
+      navigate(`/orderReport/`)
+      handleClose()
     }
 
     const handleExpenseOption = ()=>{

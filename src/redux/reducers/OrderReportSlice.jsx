@@ -4,7 +4,7 @@ const initialState = {
     employeeReportList:[]
 }
 
-export const EmployeeReportSlice = createSlice({
+export const OrderReportSlice = createSlice({
     name: 'EmployeeReport',
     initialState,
     reducers:{  
@@ -28,6 +28,6 @@ export const EmployeeReportSlice = createSlice({
 
 export const {
     addEmployeeReport,
-} = EmployeeReportSlice.actions
+} = OrderReportSlice.actions
 
-export default EmployeeReportSlice.reducer
+export default OrderReportSlice.reducer

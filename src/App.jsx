@@ -10,9 +10,9 @@ import {Provider} from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './screens/Home';
 import Theme from '../src/assets/Theme';
-import EmployeeReport from './screens/EmployeeReport/EmployeeReport';
-import EmployeeReportCreate from './screens/EmployeeReport/EmployeeReportCreate';
-import EmployeeReportUpdate from './screens/EmployeeReport/EmployeeReportUpdate';
+import EmployeeReport from './screens/OrderReport/OrderReport';
+import EmployeeReportCreate from './screens/OrderReport/OrderReportCreate';
+import EmployeeReportUpdate from './screens/OrderReport/OrderReportUpdate';
 import EmployeeCostReport from './reports/EmployeeCostReport';
 import Configuration from './screens/Configuration';
 import TechnicianList from './screens/TechnicianReport/TechnicianList';
@@ -35,10 +35,10 @@ function App() {
 
                 <Route element={<RequireAuth/>}>
                   <Route path='/' Component={Home}/>
-                  <Route path='/employeeReport' Component={EmployeeReport}/>
-                  <Route path='/employeeReport/create' Component={EmployeeReportCreate}/>
-                  <Route path='/employeeReport/update/:id' Component={EmployeeReportUpdate}/>
-                  <Route path='/employeeReport/report' Component={EmployeeCostReport}/>
+                  <Route path='/orderReport' Component={EmployeeReport}/>
+                  <Route path='/orderReport/create' Component={EmployeeReportCreate}/>
+                  <Route path='/orderReport/update/:id' Component={EmployeeReportUpdate}/>
+                  <Route path='/orderReport/report' Component={EmployeeCostReport}/>
                   <Route path='/technicianReport/list' Component={TechnicianList}/>
                   <Route path='/configuration' Component={Configuration}/>
                 </Route>

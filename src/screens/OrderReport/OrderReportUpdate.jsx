@@ -11,14 +11,14 @@ import { Link } from 'react-router-dom';
 import { useFormik } from 'formik' 
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux'
-import {addEmployeeReport} from '../../redux/reducers/EmployeeReportSlice'
+import {addEmployeeReport} from '../../redux/reducers/OrderReportSlice'
 import LinkApp from '../../components/LinkApp';
 import { useNavigate } from "react-router-dom";
-import EmployeeReportService from '../../services/EmployeeReportService';
+import EmployeeReportService from '../../services/OrderReportService';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const EmployeeReportUpdate = () => {
+const OrderReportUpdate = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -232,4 +232,4 @@ const EmployeeReportUpdate = () => {
   )
 }
 
-export default EmployeeReportUpdate 
+export default OrderReportUpdate 

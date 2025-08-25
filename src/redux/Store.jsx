@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import MenuSlice from '../redux/reducers/MenuSlice'
-import EmployeeReportSlice from './reducers/EmployeeReportSlice';
+import EmployeeReportSlice from './reducers/OrderReportSlice';
 import CompanyDiscountSlice from './reducers/CompanyDiscountSlice';
 import UserSlice from './reducers/UserSlice'
 

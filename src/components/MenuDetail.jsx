@@ -39,8 +39,8 @@ const MenuDetail = () => {
       icon: <HomeIcon/>
     },
     {
-      text: "Employee Report",
-      link: "employeeReport",
+      text: "Order Report",
+      link: "orderReport",
       action: closeMenu,
       icon: <AccessTimeIcon/>
     },
