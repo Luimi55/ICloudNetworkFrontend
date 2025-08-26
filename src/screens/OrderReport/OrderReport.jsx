@@ -24,44 +24,53 @@ import Styles from '../../styles/General.module.css'
   import EmployeeReportService from '../../services/OrderReportService';
   import useMobile from '../../hooks/useMobile';
   import { useNavigate } from "react-router-dom";
+  import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Loading from '../../components/loading';
+import errorAlert from '../../components/Alerts/ErrorAlert';
+import OrderReportGrid from '../../components/Grids/OrderReportGrid';
 
-const OrderReport = () => {
+const OrderReport = ({ route }) => {
 
-    const [employeeReportList,setEmployeeReportList] = useState([])
+    const {email} = useParams();
+
+    const [orderReport,setOrderReport] = useState([])
+
+    const [showLoading, setShowLoading] = useState(false);
 
     const [openMobileAlert, setOpenMobileAlert] = useState(false)
 
-    const employeeReportService = EmployeeReportService();
+    const orderReportService = EmployeeReportService();
 
     const navigate = useNavigate();
 
     const mobile = useMobile();
 
-    useEffect(()=>{
-      //local
-       let localStorageEmployeeReports = localStorage.getItem('employeeReports');
-      // if(localStorageEmployeeReports == ""){
-      //   localStorageEmployeeReports = "[]"
-      //   localStorage.setItem('employeeReports',localStorageEmployeeReports)
-      // }
-      let currentUser = localStorage.getItem('currentUser');
-      let employeeReports = JSON.parse(localStorageEmployeeReports);
-      if(employeeReports){
-        employeeReports = employeeReports.filter(empRep=>empRep.userEmail == currentUser)
-        if(employeeReports){
-          setEmployeeReportList(employeeReports)
-        }
-      }
+      const formattedOrderReport=(orderReport)=>{
+      const updatedOrders = orderReport.map(order => {
+      const date = new Date(order.orderDate);
+      return {
+        ...order,
+        orderDate: date.toISOString().split("T")[0] // keep only YYYY-MM-DD
+      };
+      });
+      return updatedOrders;
+    }
 
-      // employeeReportService.GetEmployeeReport() Backend
-      //   .then(res=>{
-      //     setEmployeeReportList(res.data)
-      //   })
-      //   .catch(err=>{
-      //     console.log(res)
-      //   })
+    useEffect(()=>{
+      orderReportService.GetOrderReport(email)
+        .then(res=>{
+          const formattedOrders = formattedOrderReport(res.data)
+          setOrderReport(formattedOrders)
+        })
+        .catch(err=>{
+            errorAlert(err)
+            setShowLoading(false)
+            console.log(err)
+        })
     },[])
+
+
 
     const reportValidation = () => {
 
@@ -117,42 +126,6 @@ const OrderReport = () => {
     const getBaseUrl = () => {
       return location.protocol + '//' + location.host;
     }
-    const col = [
-      { field: 'orderId', headerName: 'Order Id'},
-      { field: 'reportDate', headerName: 'Date'},
-      { field: 'cost', headerName: 'Cost per hour'},
-      { field: 'hours', headerName: 'Hours'},
-      { field: 'materials', headerName: 'Materials'},
-      { field: 'parking', headerName: 'Parking'},
-      { field: 'toll', headerName: 'TOLL'},
-      { field: 'milla', headerName: 'Milla'},
-      { field: 'others', headerName: 'Others'},
-      {
-        field: 'actions',
-        type: 'actions',
-        headerName: 'Actions',
-        width: 100,
-        cellClassName: 'actions',
-        getActions: ({ id }) => {
-  
-          return [
-            <GridActionsCellItem
-              icon={<EditIcon/>}
-              label="Edit"
-              className="textPrimary"
-              onClick={()=>navigate(`/orderReport/update/${id}`)}
-              color="inherit"
-            />,
-            <GridActionsCellItem
-              icon={<DeleteIcon />}
-              label="Delete"
-              onClick={()=>handleDeleteClick(id)}
-              color="inherit"
-            />,
-          ];
-        },
-      },
-    ];
       
     
   return (
@@ -169,7 +142,8 @@ const OrderReport = () => {
       <Header name="Employee Report"/>  
 
       <div style={{
-        // backgroundColor: 'red',
+        width:"60%",
+        margin: "auto",
         justifyContent: 'space-between',
         //gap: 10,
         display: 'flex'
@@ -202,7 +176,7 @@ const OrderReport = () => {
             </Button> 
         </PDFDownloadLink> */}
 
-        <LinkApp to={mobile.isMobile?"":"/orderReport/report"} color="white" onClick={()=>reportValidation()}>
+        {/* <LinkApp to={mobile.isMobile?"":"/orderReport/report"} color="white" onClick={()=>reportValidation()}>
           <Button
               variant="contained"
               color="confirm"
@@ -213,25 +187,19 @@ const OrderReport = () => {
             >
                 Generate report
             </Button> 
-        </LinkApp>
+        </LinkApp> */}
 
 
       </div>
           
-
-        <DataGrid
-        getRowId={(row) => row.orderId}
-        rows={employeeReportList}
-        columns={col}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        autoHeight = {true}
-        pageSizeOptions={[5, 10]}
-        />
-
+      <div
+          style={{
+              width:"60%",
+              margin: "auto",
+          }}        
+      >
+        <OrderReportGrid orderReport={orderReport}/>
+      </div>
 
       <Snackbar
         open={openMobileAlert}
@@ -252,7 +220,7 @@ const OrderReport = () => {
       {/* <PDFViewer style={{width: "100%", height: "90vh"}}>
         <EmployeeCostReport employeeReportList={employeeReportList}/>
         </PDFViewer> */}
-
+    <Loading show={showLoading}/>
     </div>
   )
 }

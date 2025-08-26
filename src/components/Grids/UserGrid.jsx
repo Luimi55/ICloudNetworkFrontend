@@ -19,6 +19,8 @@ const UserGrid = ({users}) => {
 
     const [anchorEl, setAnchorEl] = useState(null);
 
+    const [selectedEmail, setSelectedEmail] = useState("");
+
     const navigate = useNavigate();
 
     const col = [
@@ -34,7 +36,7 @@ const UserGrid = ({users}) => {
           return [
             <GridActionsCellItem
               icon={<MoreHorizIcon/>}
-              label="Edit"
+              label="Options"
               className="textPrimary"
               onClick={(event)=>handleAction(event, id)}
               color="inherit"
@@ -45,9 +47,9 @@ const UserGrid = ({users}) => {
     ];
 
     const handleAction=(event, id)=>{
-
-    setAnchorEl(event.currentTarget);
-    setShowMenu(!showMenu)
+      setSelectedEmail(id);
+      setAnchorEl(event.currentTarget);
+      setShowMenu(!showMenu)
     // console.log(id)
     }
 
@@ -57,7 +59,7 @@ const UserGrid = ({users}) => {
     };
 
     const handleOrderOption = ()=>{
-      navigate(`/orderReport/`)
+      navigate(`/orderReport/${selectedEmail}`)
       handleClose()
     }
 
