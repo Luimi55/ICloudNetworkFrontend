@@ -22,13 +22,14 @@ const OrderReportService = () => {
         })
     }
 
-    const GetOrderReport = async (userId) => {
+    const GetOrderReport = async (data) => {
         return await axios({
-            method: 'get',
+            method: 'post',
             headers: {
                 'Authorization': `Bearer ${getCookie()}`
             },
-            url: `${API_URL}/OrderReport/GetAllOrderReport?userId=${userId}`
+            url: `${API_URL}/OrderReport/GetOrderReportByDateRange`,
+            data: data
         })
     }
 

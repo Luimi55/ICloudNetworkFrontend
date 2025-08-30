@@ -58,8 +58,14 @@ const OrderReport = () => {
     }
 
     useEffect(()=>{
+      const data = {
+        userId: id,
+        startDate: new Date(),
+        endDate: new Date()
+      }
+
       setShowLoading(true)
-      orderReportService.GetOrderReport(id)
+      orderReportService.GetOrderReport(data)
         .then(res=>{
           setShowLoading(false)
           const formattedOrders = formattedOrderReport(res.data)

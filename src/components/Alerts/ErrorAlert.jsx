@@ -10,7 +10,7 @@ const ErrorAlert = (error) => {
 
     const data = error?.response?.data
 
-    if(typeof data === "string"){
+    if(typeof data === "string" && data != ""){
       errorMessage = data
     } else if(data instanceof Object){
       const firstKey = Object.keys(data).at();
