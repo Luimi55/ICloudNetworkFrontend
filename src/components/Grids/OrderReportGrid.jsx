@@ -47,11 +47,11 @@ const OrderReportGrid = ({orderReport}) => {
             columns={col}
             initialState={{
             pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
+                paginationModel: { page: 0, pageSize: 7 },
             },
             }}
             // autoHeight = {true}
-            pageSizeOptions={[5, 10]}
+            pageSizeOptions={[7, 12]}
         />
     </div>
   )

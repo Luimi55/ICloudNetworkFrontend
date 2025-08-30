@@ -30,9 +30,9 @@ import Loading from '../../components/loading';
 import errorAlert from '../../components/Alerts/ErrorAlert';
 import OrderReportGrid from '../../components/Grids/OrderReportGrid';
 
-const OrderReport = ({ route }) => {
+const OrderReport = () => {
 
-    const {email} = useParams();
+    const {id} = useParams();
 
     const [orderReport,setOrderReport] = useState([])
 
@@ -58,8 +58,10 @@ const OrderReport = ({ route }) => {
     }
 
     useEffect(()=>{
-      orderReportService.GetOrderReport(email)
+      setShowLoading(true)
+      orderReportService.GetOrderReport(id)
         .then(res=>{
+          setShowLoading(false)
           const formattedOrders = formattedOrderReport(res.data)
           setOrderReport(formattedOrders)
         })
@@ -148,7 +150,7 @@ const OrderReport = ({ route }) => {
         //gap: 10,
         display: 'flex'
       }}>
-        <LinkApp to={"/orderReport/create"} color="white">
+        <LinkApp to={`/orderReport/create/${id}`} color="white">
           <Button
             variant="contained"
             color="confirm"

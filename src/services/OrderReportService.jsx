@@ -9,40 +9,32 @@ const OrderReportService = () => {
     const COOKIE = import.meta.env.VITE_SECRET_COOKIE
     const {getCookie} = useAuth();
 
-    const  AddEmployeeReport = async (employeeReport) => {
+    const  AddOrderReport = async (orderReport) => {
         const user = jwtDecode(Cookies.get(COOKIE));
 
         return await axios({
             method: 'post',
-            url: `${API_URL}/EmployeeReport/AddEmployeeReport`,
-            data:{
-                orderId: employeeReport.orderId,
-                cost: employeeReport.cost,
-                hours: employeeReport.hours,
-                reportDate: new Date(),
-                materials: employeeReport.materials,
-                parking: employeeReport.parking,
-                toll: employeeReport.toll,
-                milla: employeeReport.milla,
-                others: employeeReport.others,
-                userId: user.sub
-            }
+            url: `${API_URL}/OrderReport/AddOrderReport`,
+            headers: {
+                'Authorization': `Bearer ${getCookie()}`
+            },
+            data: orderReport
         })
     }
 
-    const GetOrderReport = async (email) => {
+    const GetOrderReport = async (userId) => {
         return await axios({
             method: 'get',
             headers: {
                 'Authorization': `Bearer ${getCookie()}`
             },
-            url: `${API_URL}/OrderReport/GetAllOrderReport?userEmail=${email}`
+            url: `${API_URL}/OrderReport/GetAllOrderReport?userId=${userId}`
         })
     }
 
 
     return{
-        AddEmployeeReport,
+        AddOrderReport,
         GetOrderReport
     }
 }

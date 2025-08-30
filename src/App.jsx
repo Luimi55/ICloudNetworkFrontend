@@ -35,8 +35,8 @@ function App() {
 
                 <Route element={<RequireAuth/>}>
                   <Route path='/' Component={Home}/>
-                  <Route path='/orderReport/:email' Component={EmployeeReport}/>
-                  <Route path='/orderReport/create' Component={EmployeeReportCreate}/>
+                  <Route path='/orderReport/:id' Component={EmployeeReport}/>
+                  <Route path='/orderReport/create/:id' Component={EmployeeReportCreate}/>
                   <Route path='/orderReport/update/:id' Component={EmployeeReportUpdate}/>
                   <Route path='/orderReport/report' Component={EmployeeCostReport}/>
                   <Route path='/technicianReport/list' Component={TechnicianList}/>

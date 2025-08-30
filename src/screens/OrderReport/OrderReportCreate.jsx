@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Header from '../../components/Header'
 import {
     Grid,
@@ -14,75 +14,66 @@ import { useSelector, useDispatch } from 'react-redux'
 import {addEmployeeReport} from '../../redux/reducers/OrderReportSlice'
 import LinkApp from '../../components/LinkApp';
 import { useNavigate } from "react-router-dom";
-import EmployeeReportService from '../../services/OrderReportService';
+import OrderReportService from '../../services/OrderReportService';
 import Swal from 'sweetalert2';
+import BasicDatePicker from '../../components/BasicDatePicker';
+import ErrorAlert from '../../components/Alerts/ErrorAlert';
+import SucessfulAlert from '../../components/Alerts/SucessfulAlert'
+import Loading from '../../components/loading';
+import { useParams } from 'react-router-dom';
 
 const OrderReportCreate = () => {
 
+    const {id} = useParams();
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const employeeReportService = EmployeeReportService();
+    const orderReportService = OrderReportService();
+    const [showLoading, setShowLoading] = useState(false);
 
     const formik = useFormik({
         initialValues: {
-            id:'',
+            userId:'',
             orderId: '',
-            cost: 0,
             hours: 0,
-            materials: 0,
-            parking: 0,
-            toll: 0,
-            milla: 0,
-            others:0,
-
+            orderDate: new Date()
           },
           validationSchema:Yup.object({
             orderId: Yup.string()
             .max(30, "Enter less than 30 characters")
             .required("This field is required"),
-            cost: Yup.number()
-            .typeError("Please enter numeric characters")
-            .required("This field is required"),
             hours: Yup.number()
             .typeError("Please enter numeric characters")
             .required("This field is required"),
-            materials: Yup.number()
-            .typeError("Please enter numeric characters"),
-            parking: Yup.number()
-            .typeError("Please enter numeric characters"),
-            toll: Yup.number()
-            .typeError("Please enter numeric characters"),
-            milla: Yup.number()
-            .typeError("Please enter numeric characters"),
-            others: Yup.number()
-            .typeError("Please enter numeric characters")
           }),
           onSubmit:async values => {
 
-            //local
-            var employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
-            if(!employeeReports){
-              employeeReports = []
-            }
-            values.reportDate = new Date()
-            values.userEmail = localStorage.getItem('currentUser')
-            employeeReports.push(values)
-            localStorage.setItem('employeeReports', JSON.stringify(employeeReports))
+            values.userId = id
 
-            // await employeeReportService.AddEmployeeReport(values) //Backend
-            // .then(res=>{
-            //     console.log(res)
-            // })
-            // .catch(err=>{
-            //     console.log(err)
-            // })
-            navigate("/employeeReport")
-            Swal.fire({
-                title: "Report added successfully!",
-                icon: "success"
-              });
+            setShowLoading(true)
+            await orderReportService.AddOrderReport(values) 
+            .then(res=>{
+                setShowLoading(false)
+                SucessfulAlert()
+                navigate(`/orderReport/${id}`)
+            })
+            .catch(err=>{
+                ErrorAlert(err)
+                setShowLoading(false)
+                console.log(err)
+            })
+            // navigate("/orderReport")
+            // Swal.fire({
+            //     title: "Report added successfully!",
+            //     icon: "success"
+            //   });
+
           }
     })
+
+    const setOrderDateValue = (value) => {
+        formik.setFieldValue('orderDate',value.$d)
+    }
 
   return (
     <div
@@ -111,16 +102,6 @@ const OrderReportCreate = () => {
             </Grid>
             <Grid item size={{xs:6, md:4}}>
                 <TextField
-                error={formik.errors.cost?true:false}
-                 label="Cost" 
-                 variant="outlined" 
-                 value={formik.values.cost} 
-                 onChange={formik.handleChange('cost')}
-                 helperText={formik.errors.cost}
-                />
-            </Grid>
-            <Grid item size={{xs:6, md:4}}>
-                <TextField
                 error={formik.errors.hours?true:false}
                  label="Hours" 
                  variant="outlined" 
@@ -129,55 +110,13 @@ const OrderReportCreate = () => {
                  helperText={formik.errors.hours}
                 />
             </Grid>
-            <Grid item size={{xs:6, md:4}}> 
-            <TextField
-                error={formik.errors.materials?true:false}
-                 label="Materials" 
-                 variant="outlined" 
-                 value={formik.values.materials} 
-                 onChange={formik.handleChange('materials')}
-                 helperText={formik.errors.materials}
-                />
-            </Grid>
             <Grid item size={{xs:6, md:4}}>
-            <TextField
-                error={formik.errors.parking?true:false}
-                 label="Parking" 
-                 variant="outlined" 
-                 value={formik.values.parking} 
-                 onChange={formik.handleChange('parking')}
-                 helperText={formik.errors.parking}
-                />
-            </Grid>
-            <Grid item size={{xs:6, md:4}}>
-            <TextField
-                error={formik.errors.toll?true:false}
-                 label="TOLL" 
-                 variant="outlined" 
-                 value={formik.values.toll} 
-                 onChange={formik.handleChange('toll')}
-                 helperText={formik.errors.toll}
-                />
-            </Grid>
-            <Grid item size={{xs:6, md:6}}>
-            <TextField
-                 error={formik.errors.milla?true:false}
-                 label="Milla" 
-                 variant="outlined" 
-                 value={formik.values.milla} 
-                 onChange={formik.handleChange('milla')}
-                 helperText={formik.errors.milla}
-                />
-            </Grid>
-            <Grid item size={{xs:6, md:6}}>
-            <TextField
-                 error={formik.errors.others?true:false}
-                 label="Others" 
-                 variant="outlined" 
-                 value={formik.values.others} 
-                 onChange={formik.handleChange('others')}
-                 helperText={formik.errors.others}
-                />
+                <BasicDatePicker
+                 label="Order Date"
+                //  value={formik.values.orderDate}
+                 onChange={setOrderDateValue}
+                //  onChange={formik.values.orderDate}
+                 />
             </Grid>
             <Grid item size={{xs:0, md:8}}>
             </Grid>
@@ -204,7 +143,7 @@ const OrderReportCreate = () => {
                 </Link>
             </Grid>
         </Grid>
-            
+    <Loading show={showLoading}/>
     </div>
   )
 }

@@ -19,7 +19,7 @@ const UserGrid = ({users}) => {
 
     const [anchorEl, setAnchorEl] = useState(null);
 
-    const [selectedEmail, setSelectedEmail] = useState("");
+    const [selectedId, setSelectedId] = useState("");
 
     const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ const UserGrid = ({users}) => {
     ];
 
     const handleAction=(event, id)=>{
-      setSelectedEmail(id);
+      setSelectedId(id);
       setAnchorEl(event.currentTarget);
       setShowMenu(!showMenu)
     // console.log(id)
@@ -59,7 +59,7 @@ const UserGrid = ({users}) => {
     };
 
     const handleOrderOption = ()=>{
-      navigate(`/orderReport/${selectedEmail}`)
+      navigate(`/orderReport/${selectedId}`)
       handleClose()
     }
 
@@ -73,7 +73,7 @@ const UserGrid = ({users}) => {
     >
         {/* <TextField/> */}
         <DataGrid
-            getRowId={(row) => row.email}
+            getRowId={(row) => row.id}
             rows={users}
             columns={col}
             initialState={{
