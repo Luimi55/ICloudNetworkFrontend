@@ -7,18 +7,16 @@ import { TextField } from '@mui/material';
 import dayjs from 'dayjs';
 import Helper from '../hooks/Helper';
 
-export default function BasicDatePicker({value, onChange}) {
-
+export default function BasicDatePicker({defaultValue, onChange, label}) {
     const {getDateFormatted} = Helper()
-
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['DatePicker']}>
         <DatePicker
-            label="Order Date"
-            defaultValue={dayjs(getDateFormatted(new Date()))}
-            // value={value} 
+            label={label}
+            defaultValue={dayjs(getDateFormatted(defaultValue))}
+            // value={new Date()} 
             onChange={onChange}
             // slotProps={{
             //     textField: {

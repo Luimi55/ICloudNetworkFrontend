@@ -29,12 +29,16 @@ import Swal from 'sweetalert2';
 import Loading from '../../components/loading';
 import errorAlert from '../../components/Alerts/ErrorAlert';
 import OrderReportGrid from '../../components/Grids/OrderReportGrid';
+import RangeDatePicker from '../../components/RangeDatePicker';
+import Helper from '../../hooks/Helper';
 
 const OrderReport = () => {
 
     const {id} = useParams();
 
     const [orderReport,setOrderReport] = useState([])
+
+    const {getWeekRange} = Helper()
 
     const [showLoading, setShowLoading] = useState(false);
 
@@ -45,6 +49,10 @@ const OrderReport = () => {
     const navigate = useNavigate();
 
     const mobile = useMobile();
+
+    const [startDate, setStartDate] = useState(getWeekRange().startDate)
+
+    const [endDate, setEndDate] = useState(getWeekRange().endDate)
 
       const formattedOrderReport=(orderReport)=>{
       const updatedOrders = orderReport.map(order => {
@@ -58,10 +66,16 @@ const OrderReport = () => {
     }
 
     useEffect(()=>{
+      getOrderReport(startDate , endDate)
+    },[])
+
+
+    const getOrderReport = (startDate, endDate) => {
+
       const data = {
         userId: id,
-        startDate: new Date(),
-        endDate: new Date()
+        startDate: startDate,
+        endDate: endDate
       }
 
       setShowLoading(true)
@@ -76,7 +90,7 @@ const OrderReport = () => {
             setShowLoading(false)
             console.log(err)
         })
-    },[])
+    }
 
 
 
@@ -96,6 +110,19 @@ const OrderReport = () => {
   
       setOpenMobileAlert(false);
     };
+
+
+    const onChangeStartDate = (value)=>{
+      setStartDate(value.$d)
+    }
+
+    const onChangeEndDate = (value)=>{
+      setEndDate(value.$d)
+    }
+
+    const onClickApply = () => {
+      getOrderReport(startDate, endDate)
+    }
 
     const handleDeleteClick = (id) => {
       //Local
@@ -149,28 +176,15 @@ const OrderReport = () => {
 
       <Header name="Employee Report"/>  
 
-      <div style={{
+      {/* <div style={{
         width:"60%",
         margin: "auto",
         justifyContent: 'space-between',
         //gap: 10,
         display: 'flex'
       }}>
-        <LinkApp to={`/orderReport/create/${id}`} color="white">
-          <Button
-            variant="contained"
-            color="confirm"
-            sx={{
-              marginBottom: "1%",
-              //justifyContent: 'space-between'
-            }}
-            //onClick={()=>addReport()}
-          >
-              Add Report
-          </Button>     
-        
-        </LinkApp>
-        {/* <PDFDownloadLink document={<EmployeeCostReport employeeReportList={employeeReportList}/>} fileName='ex.pdf'>
+
+        <PDFDownloadLink document={<EmployeeCostReport employeeReportList={employeeReportList}/>} fileName='ex.pdf'>
           <Button
               variant="contained"
               color="confirm"
@@ -182,9 +196,9 @@ const OrderReport = () => {
             >
                 Generate report
             </Button> 
-        </PDFDownloadLink> */}
+        </PDFDownloadLink>
 
-        {/* <LinkApp to={mobile.isMobile?"":"/orderReport/report"} color="white" onClick={()=>reportValidation()}>
+        <LinkApp to={mobile.isMobile?"":"/orderReport/report"} color="white" onClick={()=>reportValidation()}>
           <Button
               variant="contained"
               color="confirm"
@@ -195,10 +209,10 @@ const OrderReport = () => {
             >
                 Generate report
             </Button> 
-        </LinkApp> */}
+        </LinkApp>
 
 
-      </div>
+      </div> */}
           
       <div
           style={{
@@ -206,7 +220,31 @@ const OrderReport = () => {
               margin: "auto",
           }}        
       >
+
+        <RangeDatePicker 
+        onChangeStartDate={onChangeStartDate} 
+        onChangeEndDate={onChangeEndDate}
+        defaultValueStartDate={getWeekRange().startDate}
+        defaultValueEndDate={getWeekRange().endDate}
+        onClickButton={onClickApply}
+
+        />
+
+        <LinkApp to={`/orderReport/create/${id}`} color="white">
+          <Button
+            variant="contained"
+            color="confirm"
+            sx={{
+              marginBottom: "1%",
+            }}
+          >
+              Add Report
+          </Button>     
+        </LinkApp>
+
+
         <OrderReportGrid orderReport={orderReport}/>
+        
       </div>
 
       <Snackbar
