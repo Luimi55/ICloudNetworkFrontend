@@ -5,8 +5,9 @@ import React, {useState} from 'react'
   } from '@mui/x-data-grid';
   import EditIcon from '@mui/icons-material/Edit';
   import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+  import Swal from 'sweetalert2';
 
-const OrderReportGrid = ({orderReport}) => {
+const OrderReportGrid = ({orderReport, handleDelete}) => {
     const col = [
       { field: 'orderId', headerName: 'Order Id',  width: 200},
       { field: 'hours', headerName: 'Hours',  width: 100},
@@ -30,7 +31,7 @@ const OrderReportGrid = ({orderReport}) => {
             <GridActionsCellItem
               icon={<DeleteIcon />}
               label="Delete"
-              onClick={()=>handleDeleteClick(id)}
+              onClick={()=>handleDelete(id)}
               color="inherit"
             />,
           ];
@@ -39,10 +40,11 @@ const OrderReportGrid = ({orderReport}) => {
     ];
 
 
+
   return (
     <div>
         <DataGrid
-            getRowId={(row) => row.orderId}
+            getRowId={(row) => row.id}
             rows={orderReport}
             columns={col}
             initialState={{

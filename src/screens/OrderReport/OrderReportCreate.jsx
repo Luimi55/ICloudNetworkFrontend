@@ -133,7 +133,7 @@ const OrderReportCreate = () => {
                 {/* </LinkApp> */}
             </Grid>
             <Grid size={{xs:12, md:1}}>
-            <Link to={"/orderReport"}  style={{ textDecoration: 'none', color:'white' }}>
+            <Link to={`/orderReport/${id}`}  style={{ textDecoration: 'none', color:'white' }}>
                 <Button 
                 variant="contained" 
                 color="error"

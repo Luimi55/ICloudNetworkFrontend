@@ -33,10 +33,21 @@ const OrderReportService = () => {
         })
     }
 
+    const DeleteOrderReport = async (orderId) => {
+        return await axios({
+            method: 'delete',
+            headers: {
+                'Authorization': `Bearer ${getCookie()}`
+            },
+            url: `${API_URL}/OrderReport/DeleteOrderReport?orderId=${orderId}`,
+        })
+    }
+
 
     return{
         AddOrderReport,
-        GetOrderReport
+        GetOrderReport,
+        DeleteOrderReport
     }
 }
 

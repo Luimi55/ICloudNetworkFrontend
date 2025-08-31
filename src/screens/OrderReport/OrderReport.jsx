@@ -31,6 +31,7 @@ import errorAlert from '../../components/Alerts/ErrorAlert';
 import OrderReportGrid from '../../components/Grids/OrderReportGrid';
 import RangeDatePicker from '../../components/RangeDatePicker';
 import Helper from '../../hooks/Helper';
+import DeleteAlert from '../../components/Alerts/DeleteAlert';
 
 const OrderReport = () => {
 
@@ -124,30 +125,28 @@ const OrderReport = () => {
       getOrderReport(startDate, endDate)
     }
 
-    const handleDeleteClick = (id) => {
-      //Local
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to remove this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          let employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
-          employeeReports = employeeReports.filter(empRep=>empRep.orderId!=id)
-          localStorage.setItem('employeeReports', JSON.stringify(employeeReports))
-          setEmployeeReportList(employeeReports)
-          Swal.fire({
-            title: "Deleted!",
-            text: "Report has been deleted.",
-            icon: "success"
-          });
-        }
-      });
+    const handleDelete = (id) => {
+        DeleteAlert(()=>deleteOrderReport(id))
+    }
 
+    const deleteOrderReport =  async (id) => {
+      setShowLoading(true)
+      orderReportService.DeleteOrderReport(id)
+        .then(res=>{
+          setShowLoading(false)
+          const reportsFilted = orderReport.filter(report=>report.id!=id)
+          setOrderReport(reportsFilted)
+            Swal.fire({
+              title: "Deleted!",
+              text: "Order report has been deleted.",
+              icon: "success"
+            });
+        })
+        .catch(err=>{
+            errorAlert(err)
+            setShowLoading(false)
+            console.log(err)
+        })
     }
 
     const handleEditClick = (id) => {
@@ -174,7 +173,7 @@ const OrderReport = () => {
         }}
       >
 
-      <Header name="Employee Report"/>  
+      <Header name="Order Report"/>  
 
       {/* <div style={{
         width:"60%",
@@ -243,7 +242,7 @@ const OrderReport = () => {
         </LinkApp>
 
 
-        <OrderReportGrid orderReport={orderReport}/>
+        <OrderReportGrid orderReport={orderReport} handleDelete={handleDelete}/>
         
       </div>
 
