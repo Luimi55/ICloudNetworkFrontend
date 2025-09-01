@@ -4,9 +4,11 @@ const Helper = () => {
 
     const getDateFormatted = (date)=>{
         if(date && date instanceof Object){
-          return date.toISOString().split("T")[0]
+          return date.toLocaleDateString().split("T")[0]
+        } else if(date && typeof date === "string" && date != ""){
+          return date
         } else {
-          return new Date().toISOString().split("T")[0]
+          return new Date().toLocaleDateString().split("T")[0]
         }
     }
 

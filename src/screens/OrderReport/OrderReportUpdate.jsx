@@ -105,7 +105,7 @@ const OrderReportUpdate = () => {
             <Grid item size={{xs:6, md:4}}>
                 <BasicDatePicker
                  label="Order Date"
-                 defaultValue={orderReportCache.orderDateObject}
+                 defaultValue={orderReportCache.orderDate}
                 //  value={formik.values.orderDate}
                  onChange={setOrderDateValue}
                 //  onChange={formik.values.orderDate}

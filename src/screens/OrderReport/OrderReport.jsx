@@ -52,13 +52,13 @@ const OrderReport = () => {
 
     const [endDate, setEndDate] = useState(getWeekRange().endDate)
 
+
       const formattedOrderReport=(orderReport)=>{
         const updatedOrders = orderReport.map(order => {
-          const date = new Date(order.orderDate);
+          const date = order.orderDate
           return {
             ...order,
-            orderDate: date.toISOString().split("T")[0], // keep only YYYY-MM-DD
-            orderDateObject: date
+            orderDate: date.split("T")[0], // keep only YYYY-MM-DD
           };
         });
       return updatedOrders;
@@ -219,8 +219,8 @@ const OrderReport = () => {
         <RangeDatePicker 
         onChangeStartDate={onChangeStartDate} 
         onChangeEndDate={onChangeEndDate}
-        defaultValueStartDate={getWeekRange().startDate}
-        defaultValueEndDate={getWeekRange().endDate}
+        defaultValueStartDate={startDate}
+        defaultValueEndDate={endDate}
         onClickButton={onClickApply}
 
         />
