@@ -11,107 +11,67 @@ import { Link } from 'react-router-dom';
 import { useFormik } from 'formik' 
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux'
-import {addEmployeeReport} from '../../redux/reducers/OrderReportSlice'
 import LinkApp from '../../components/LinkApp';
 import { useNavigate } from "react-router-dom";
 import EmployeeReportService from '../../services/OrderReportService';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Loading from '../../components/loading';
+import BasicDatePicker from '../../components/BasicDatePicker';
+import ErrorAlert from '../../components/Alerts/ErrorAlert';
+import SucessfulAlert from '../../components/Alerts/SucessfulAlert'
 
 const OrderReportUpdate = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {id} = useParams();
-    const employeeReportService = EmployeeReportService();
+    const orderReportService = EmployeeReportService();
     const [employeeReport, setEmployeeReport] = useState({});
+    const [showLoading, setShowLoading] = useState(false);
+    const orderReportCache = useSelector(state=>state.OrderReport.orderReportCache)
 
-    useEffect(()=>{
-        //local
-        let localStorageEmployeeReports = localStorage.getItem('employeeReports');
-        const employeeReports = JSON.parse(localStorageEmployeeReports);
-        let tempEmployeeReport = employeeReports.find(empRep=>empRep.orderId == id)
-        formik.setFieldValue("cost", tempEmployeeReport.cost)
-        formik.setFieldValue("hours", tempEmployeeReport.hours)
-        formik.setFieldValue("materials", tempEmployeeReport.materials)
-        formik.setFieldValue("parking", tempEmployeeReport.parking)
-        formik.setFieldValue("toll", tempEmployeeReport.toll)
-        formik.setFieldValue("milla", tempEmployeeReport.milla)
-        formik.setFieldValue("others", tempEmployeeReport.others)
-        formik.setFieldValue("orderId", tempEmployeeReport.orderId)
-    },[])
+    const setOrderDateValue = (value) => {
+        formik.setFieldValue('orderDate',value.$d)
+    }
 
     const formik = useFormik({
         initialValues: {
-            id:'',
-            orderId: '',
-            cost: 0,
-            hours: 0,
-            materials: 0,
-            parking: 0,
-            toll: 0,
-            milla: 0,
-            others:0,
-
+            userId:orderReportCache.userId,
+            orderId: orderReportCache.orderId,
+            hours: orderReportCache.hours,
+            orderDate: orderReportCache.orderDate
           },
           validationSchema:Yup.object({
             orderId: Yup.string()
             .max(30, "Enter less than 30 characters")
             .required("This field is required"),
-            cost: Yup.number()
-            .typeError("Please enter numeric characters")
-            .required("This field is required"),
             hours: Yup.number()
             .typeError("Please enter numeric characters")
             .required("This field is required"),
-            materials: Yup.number()
-            .typeError("Please enter numeric characters"),
-            parking: Yup.number()
-            .typeError("Please enter numeric characters"),
-            toll: Yup.number()
-            .typeError("Please enter numeric characters"),
-            milla: Yup.number()
-            .typeError("Please enter numeric characters"),
-            others: Yup.number()
-            .typeError("Please enter numeric characters")
           }),
           onSubmit:async values => {
-            // //local
-            var employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
-            const newEmployeeReport = employeeReports.map(empRep=>{
-                if(empRep.orderId == values.orderId){
-                    return {
-                        ...values,
-                         reportDate: empRep.reportDate,
-                         userEmail: empRep.userEmail
-                        }
-                } else {
-                    return empRep
-                }
-
+            
+            setShowLoading(true)
+            await orderReportService.UpdateOrderReport(values) 
+            .then(res=>{
+                setShowLoading(false)
+                SucessfulAlert()
+                navigate(`/orderReport/${id}`)
             })
-            localStorage.setItem('employeeReports', JSON.stringify(newEmployeeReport))
-
-            // // await employeeReportService.AddEmployeeReport(values) //Backend
-            // // .then(res=>{
-            // //     console.log(res)
-            // // })
-            // // .catch(err=>{
-            // //     console.log(err)
-            // // })
-            Swal.fire({
-                title: "Report updated successfully!",
-                icon: "success"
-              });
-            navigate("/employeeReport")
+            .catch(err=>{
+                ErrorAlert(err)
+                setShowLoading(false)
+                console.log(err)
+            })
           }
     })
 
   return (
-<div
+    <div
         className={Styles.screenBody}
     >
-        <Header name={"Add Report"} hideMenuIcon={true}/>
+        <Header name={"Update Report"} hideMenuIcon={true}/>
         <Grid 
             container
             direction="row"
@@ -122,7 +82,7 @@ const OrderReportUpdate = () => {
                 textAlign: 'center'
             }}
         >
-            <Grid item xs={6} md={4}>
+            <Grid item size={{xs:6, md:4}}>
                 <TextField
                  error={formik.errors.orderId?true:false}
                  label="Order Id" 
@@ -132,17 +92,7 @@ const OrderReportUpdate = () => {
                 helperText={formik.errors.orderId}
                 />
             </Grid>
-            <Grid item xs={6} md={4}>
-                <TextField
-                error={formik.errors.cost?true:false}
-                 label="Cost" 
-                 variant="outlined" 
-                 value={formik.values.cost} 
-                 onChange={formik.handleChange('cost')}
-                 helperText={formik.errors.cost}
-                />
-            </Grid>
-            <Grid item xs={6} md={4}>
+            <Grid item size={{xs:6, md:4}}>
                 <TextField
                 error={formik.errors.hours?true:false}
                  label="Hours" 
@@ -152,82 +102,40 @@ const OrderReportUpdate = () => {
                  helperText={formik.errors.hours}
                 />
             </Grid>
-            <Grid item xs={6} md={4}> 
-            <TextField
-                error={formik.errors.materials?true:false}
-                 label="Materials" 
-                 variant="outlined" 
-                 value={formik.values.materials} 
-                 onChange={formik.handleChange('materials')}
-                 helperText={formik.errors.materials}
-                />
+            <Grid item size={{xs:6, md:4}}>
+                <BasicDatePicker
+                 label="Order Date"
+                 defaultValue={orderReportCache.orderDateObject}
+                //  value={formik.values.orderDate}
+                 onChange={setOrderDateValue}
+                //  onChange={formik.values.orderDate}
+                 />
             </Grid>
-            <Grid item xs={6} md={4}>
-            <TextField
-                error={formik.errors.parking?true:false}
-                 label="Parking" 
-                 variant="outlined" 
-                 value={formik.values.parking} 
-                 onChange={formik.handleChange('parking')}
-                 helperText={formik.errors.parking}
-                />
+            <Grid item size={{xs:0, md:8}}>
             </Grid>
-            <Grid item xs={6} md={4}>
-            <TextField
-                error={formik.errors.toll?true:false}
-                 label="TOLL" 
-                 variant="outlined" 
-                 value={formik.values.toll} 
-                 onChange={formik.handleChange('toll')}
-                 helperText={formik.errors.toll}
-                />
-            </Grid>
-            <Grid item xs={6} md={6}>
-            <TextField
-                 error={formik.errors.milla?true:false}
-                 label="Milla" 
-                 variant="outlined" 
-                 value={formik.values.milla} 
-                 onChange={formik.handleChange('milla')}
-                 helperText={formik.errors.milla}
-                />
-            </Grid>
-            <Grid item xs={6} md={6}>
-            <TextField
-                 error={formik.errors.others?true:false}
-                 label="Others" 
-                 variant="outlined" 
-                 value={formik.values.others} 
-                 onChange={formik.handleChange('others')}
-                 helperText={formik.errors.others}
-                />
-            </Grid>
-            <Grid item xs={0} md={8}>
-            </Grid>
-            <Grid item xs={12} md={1}>
+            <Grid item size={{xs:12, md:1}}>
                 {/* <LinkApp to={"/home"} color="white"> */}
                     <Button 
                     variant="contained" 
                     color="success"
                     onClick={formik.handleSubmit}
                     >
-                        Add
+                        Update
                     </Button>
                 {/* </LinkApp> */}
             </Grid>
-            <Grid item xs={12} md={1}>
-            <Link to={"/employeeReport"}  style={{ textDecoration: 'none', color:'white' }}>
+            <Grid size={{xs:12, md:2}}>
+            <Link to={`/orderReport/${id}`}  style={{ textDecoration: 'none', color:'white' }}>
                 <Button 
                 variant="contained" 
                 color="error"
-                
                 >
                     Cancel
                 </Button>
                 </Link>
             </Grid>
         </Grid>
-            
+    <Loading show={showLoading}/>
     </div>
   )
 }

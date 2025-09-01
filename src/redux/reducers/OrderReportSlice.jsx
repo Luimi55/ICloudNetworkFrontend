@@ -1,33 +1,21 @@
 import { createSlice,current } from '@reduxjs/toolkit'
 
 const initialState = {
-    employeeReportList:[]
+    orderReportCache:{}
 }
 
 export const OrderReportSlice = createSlice({
     name: 'EmployeeReport',
     initialState,
     reducers:{  
-        addEmployeeReport: (state, action) =>{
-            var newEmployeeReport = JSON.parse(JSON.stringify(action.payload));
-            const employeeReportList = state.employeeReportList;
-            const lastEmployeeReport = employeeReportList[employeeReportList.length-1];
-            
-            var newId = lastEmployeeReport?
-                lastEmployeeReport.id+1:
-                1;
-            newEmployeeReport.id = newId
-            newEmployeeReport.date = new Date().toLocaleDateString()
-
-            state.employeeReportList = [...employeeReportList, newEmployeeReport]
-            //console.log(state.employeeReportList)
-
+        setOrderReportCache: (state, action) =>{
+            state.orderReportCache = action.payload
         },
     }
 })
 
 export const {
-    addEmployeeReport,
+    setOrderReportCache,
 } = OrderReportSlice.actions
 
 export default OrderReportSlice.reducer

@@ -44,10 +44,23 @@ const OrderReportService = () => {
     }
 
 
+    const UpdateOrderReport = async (data) => {
+        return await axios({
+            method: 'put',
+            headers: {
+                'Authorization': `Bearer ${getCookie()}`
+            },
+            url: `${API_URL}/OrderReport/UpdateOrderReport`,
+            data: data
+        })
+    }
+
+
     return{
         AddOrderReport,
         GetOrderReport,
-        DeleteOrderReport
+        DeleteOrderReport,
+        UpdateOrderReport
     }
 }
 

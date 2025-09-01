@@ -7,7 +7,7 @@ import React, {useState} from 'react'
   import DeleteIcon from '@mui/icons-material/DeleteOutlined';
   import Swal from 'sweetalert2';
 
-const OrderReportGrid = ({orderReport, handleDelete}) => {
+const OrderReportGrid = ({orderReport, handleDelete, handleEdit}) => {
     const col = [
       { field: 'orderId', headerName: 'Order Id',  width: 200},
       { field: 'hours', headerName: 'Hours',  width: 100},
@@ -25,7 +25,7 @@ const OrderReportGrid = ({orderReport, handleDelete}) => {
               icon={<EditIcon/>}
               label="Edit"
               className="textPrimary"
-              onClick={()=>navigate(`/orderReport/update/${id}`)}
+              onClick={()=>handleEdit(id)}
               color="inherit"
             />,
             <GridActionsCellItem

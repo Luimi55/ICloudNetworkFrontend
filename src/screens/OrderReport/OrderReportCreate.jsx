@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import { useFormik } from 'formik' 
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux'
-import {addEmployeeReport} from '../../redux/reducers/OrderReportSlice'
 import LinkApp from '../../components/LinkApp';
 import { useNavigate } from "react-router-dom";
 import OrderReportService from '../../services/OrderReportService';
@@ -62,12 +61,6 @@ const OrderReportCreate = () => {
                 setShowLoading(false)
                 console.log(err)
             })
-            // navigate("/orderReport")
-            // Swal.fire({
-            //     title: "Report added successfully!",
-            //     icon: "success"
-            //   });
-
           }
     })
 

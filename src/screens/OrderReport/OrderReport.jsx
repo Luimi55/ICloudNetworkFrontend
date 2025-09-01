@@ -6,17 +6,11 @@ import {
 } from '@mui/material';
 import Header from '../../components/Header'
 import Styles from '../../styles/General.module.css'
-
-  import {
-    DataGrid,
-    GridActionsCellItem,
-  } from '@mui/x-data-grid';
   import EditIcon from '@mui/icons-material/Edit';
   import DeleteIcon from '@mui/icons-material/DeleteOutlined';
   import { Link } from 'react-router-dom';
   import LinkApp from '../../components/LinkApp';
-  import { useSelector } from 'react-redux';
-  import EmployeeCostReport from '../../reports/EmployeeCostReport';
+import {useSelector, useDispatch } from 'react-redux'
   import { 
     PDFDownloadLink ,
     PDFViewer
@@ -32,6 +26,7 @@ import OrderReportGrid from '../../components/Grids/OrderReportGrid';
 import RangeDatePicker from '../../components/RangeDatePicker';
 import Helper from '../../hooks/Helper';
 import DeleteAlert from '../../components/Alerts/DeleteAlert';
+import {setOrderReportCache} from '../../redux/reducers/OrderReportSlice'
 
 const OrderReport = () => {
 
@@ -49,6 +44,8 @@ const OrderReport = () => {
 
     const navigate = useNavigate();
 
+    const dispatch = useDispatch()
+
     const mobile = useMobile();
 
     const [startDate, setStartDate] = useState(getWeekRange().startDate)
@@ -56,13 +53,14 @@ const OrderReport = () => {
     const [endDate, setEndDate] = useState(getWeekRange().endDate)
 
       const formattedOrderReport=(orderReport)=>{
-      const updatedOrders = orderReport.map(order => {
-      const date = new Date(order.orderDate);
-      return {
-        ...order,
-        orderDate: date.toISOString().split("T")[0] // keep only YYYY-MM-DD
-      };
-      });
+        const updatedOrders = orderReport.map(order => {
+          const date = new Date(order.orderDate);
+          return {
+            ...order,
+            orderDate: date.toISOString().split("T")[0], // keep only YYYY-MM-DD
+            orderDateObject: date
+          };
+        });
       return updatedOrders;
     }
 
@@ -149,12 +147,10 @@ const OrderReport = () => {
         })
     }
 
-    const handleEditClick = (id) => {
-      //Local
-      // let employeeReports = JSON.parse(localStorage.getItem('employeeReports'));
-      // employeeReports = employeeReports.filter(empRep=>empRep.orderId!=id)
-      // localStorage.setItem('employeeReports', JSON.stringify(employeeReports))
-      // setEmployeeReportList(employeeReports)
+    const handleEdit = (reportId) => {
+      const selectedReport = orderReport.find(report=>report.id == reportId);
+      dispatch(setOrderReportCache(selectedReport))
+      navigate(`/orderReport/update/${id}`)
     }
 
     const getBaseUrl = () => {
@@ -242,7 +238,7 @@ const OrderReport = () => {
         </LinkApp>
 
 
-        <OrderReportGrid orderReport={orderReport} handleDelete={handleDelete}/>
+        <OrderReportGrid orderReport={orderReport} handleDelete={handleDelete} handleEdit={handleEdit}/>
         
       </div>
 
