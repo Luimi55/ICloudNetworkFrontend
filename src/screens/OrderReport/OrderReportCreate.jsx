@@ -107,6 +107,7 @@ const OrderReportCreate = () => {
                 <BasicDatePicker
                  label="Order Date"
                  defaultValue={new Date()}
+                 maxDate={new Date()}
                 //  value={formik.values.orderDate}
                  onChange={setOrderDateValue}
                 //  onChange={formik.values.orderDate}
