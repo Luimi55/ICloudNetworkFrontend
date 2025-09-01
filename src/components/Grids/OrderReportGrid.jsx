@@ -39,6 +39,16 @@ const OrderReportGrid = ({orderReport, handleDelete, handleEdit}) => {
       },
     ];
 
+    const initialState = {
+      pagination: {
+          paginationModel: { page: 0, pageSize: 7 },
+      },
+      sorting: {
+        sortModel: [
+          { field: 'orderDate', sort: 'desc' },
+        ],
+      },
+    };
 
 
   return (
@@ -47,11 +57,7 @@ const OrderReportGrid = ({orderReport, handleDelete, handleEdit}) => {
             getRowId={(row) => row.id}
             rows={orderReport}
             columns={col}
-            initialState={{
-            pagination: {
-                paginationModel: { page: 0, pageSize: 7 },
-            },
-            }}
+            initialState={initialState}
             // autoHeight = {true}
             pageSizeOptions={[7, 12]}
         />
