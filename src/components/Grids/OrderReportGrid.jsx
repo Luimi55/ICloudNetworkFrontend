@@ -5,7 +5,6 @@ import React, {useState} from 'react'
   } from '@mui/x-data-grid';
   import EditIcon from '@mui/icons-material/Edit';
   import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-  import Swal from 'sweetalert2';
 
 const OrderReportGrid = ({orderReport, handleDelete, handleEdit}) => {
     const col = [

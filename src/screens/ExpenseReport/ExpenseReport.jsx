@@ -7,6 +7,7 @@ import ExpenseReportService from '../../services/ExpenseReportService';
 import Loading from '../../components/loading';
 import errorAlert from '../../components/Alerts/ErrorAlert';
 import ExpenseReportGrid from '../../components/Grids/ExpenseReportGrid';
+import RangeDatePicker from '../../components/RangeDatePicker';
 
 const ExpenseReport = () => {
     const {id} = useParams();
@@ -49,6 +50,18 @@ const ExpenseReport = () => {
     }
 
 
+    const onChangeStartDate = (value)=>{
+      setStartDate(value.$d)
+    }
+
+    const onChangeEndDate = (value)=>{
+      setEndDate(value.$d)
+    }
+
+    const onClickApply = () => {
+      getExpenseReport(startDate, endDate)
+    }
+
   return (
     <div 
         className={Styles.screenBody}
@@ -66,6 +79,14 @@ const ExpenseReport = () => {
                   margin: "auto",
               }}        
           >
+              <RangeDatePicker 
+              onChangeStartDate={onChangeStartDate} 
+              onChangeEndDate={onChangeEndDate}
+              defaultValueStartDate={startDate}
+              defaultValueEndDate={endDate}
+              onClickButton={onClickApply}
+              />
+
             <ExpenseReportGrid expenseReport={expenseReport}/>
           </div>
       </div>
