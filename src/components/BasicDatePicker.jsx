@@ -18,21 +18,18 @@ export default function BasicDatePicker({defaultValue, onChange, label, maxDate}
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['DatePicker']}>
         <DatePicker
             label={label}
             defaultValue={defaultDate}
             maxDate={maxDate?maxDateState:null}
-            // value={new Date()} 
             onChange={onChange}
-            // slotProps={{
-            //     textField: {
-            //         value: value,
-            //         onChange: onChange
-            //     }
-            // }}
+            slotProps={{
+            textField: {
+                variant: 'outlined',
+                sx: { width: 225 },
+              },
+            }}
         />
-      </DemoContainer>
     </LocalizationProvider>
   );
 }
