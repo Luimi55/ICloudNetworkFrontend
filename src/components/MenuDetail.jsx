@@ -46,7 +46,7 @@ const MenuDetail = () => {
     },
     {
       text: "Technician Report",
-      link: "technicianReport/list",
+      link: "technicianReport",
       action: closeMenu,
       icon: <EngineeringIcon/>
     }

@@ -19,6 +19,7 @@ import TechnicianList from './screens/TechnicianReport/TechnicianList';
 import RequireAuth from './hooks/auth/RequireAuth';
 import Login from './screens/auth/Login'
 import Signup from './screens/auth/Signup'
+import ExpenseReport from './screens/ExpenseReport/ExpenseReport';
 
 function App() {
 
@@ -35,11 +36,12 @@ function App() {
 
                 <Route element={<RequireAuth/>}>
                   <Route path='/' Component={Home}/>
+                  <Route path='/expenseReport/:id' Component={ExpenseReport}/>
                   <Route path='/orderReport/:id' Component={EmployeeReport}/>
                   <Route path='/orderReport/create/:id' Component={EmployeeReportCreate}/>
                   <Route path='/orderReport/update/:id' Component={EmployeeReportUpdate}/>
                   <Route path='/orderReport/report' Component={EmployeeCostReport}/>
-                  <Route path='/technicianReport/list' Component={TechnicianList}/>
+                  <Route path='/technicianReport' Component={TechnicianList}/>
                   <Route path='/configuration' Component={Configuration}/>
                 </Route>
               </Routes>

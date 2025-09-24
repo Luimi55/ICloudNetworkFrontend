@@ -64,6 +64,7 @@ const UserGrid = ({users}) => {
     }
 
     const handleExpenseOption = ()=>{
+        navigate(`/expenseReport/${selectedId}`)
         handleClose()
     }
 
