@@ -20,6 +20,7 @@ import RequireAuth from './hooks/auth/RequireAuth';
 import Login from './screens/auth/Login'
 import Signup from './screens/auth/Signup'
 import ExpenseReport from './screens/ExpenseReport/ExpenseReport';
+import ExpenseReportCreate from './screens/ExpenseReport/ExpenseReportCreate';
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
                 <Route element={<RequireAuth/>}>
                   <Route path='/' Component={Home}/>
                   <Route path='/expenseReport/:id' Component={ExpenseReport}/>
+                  <Route path='/expenseReport/create/:id' Component={ExpenseReportCreate}/>
                   <Route path='/orderReport/:id' Component={EmployeeReport}/>
                   <Route path='/orderReport/create/:id' Component={EmployeeReportCreate}/>
                   <Route path='/orderReport/update/:id' Component={EmployeeReportUpdate}/>

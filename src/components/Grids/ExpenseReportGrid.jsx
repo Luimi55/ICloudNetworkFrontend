@@ -7,9 +7,8 @@ import React from 'react'
   import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 
 const ExpenseReportGrid = ({expenseReport}) => {
-console.log(expenseReport)
     const col = [
-      { field: 'expenseDate', headerName: 'Expense Date',  width: 200},
+      { field: 'expenseDate', headerName: 'Expense date',  width: 200},
       { field: 'fuelOrTransport', headerName: 'Fuel or transport',  width: 125},
       { field: 'milla', headerName: 'Milla',  width: 125},
       { field: 'others', headerName: 'Others',  width: 125},

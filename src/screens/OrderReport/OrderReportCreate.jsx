@@ -15,7 +15,7 @@ import LinkApp from '../../components/LinkApp';
 import { useNavigate } from "react-router-dom";
 import OrderReportService from '../../services/OrderReportService';
 import Swal from 'sweetalert2';
-import BasicDatePicker from '../../components/BasicDatePicker';
+import BasicDatePicker from '../../components/Forms/BasicDatePicker';
 import ErrorAlert from '../../components/Alerts/ErrorAlert';
 import SucessfulAlert from '../../components/Alerts/SucessfulAlert'
 import Loading from '../../components/loading';

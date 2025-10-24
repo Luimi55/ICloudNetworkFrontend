@@ -23,7 +23,7 @@ import Swal from 'sweetalert2';
 import Loading from '../../components/loading';
 import errorAlert from '../../components/Alerts/ErrorAlert';
 import OrderReportGrid from '../../components/Grids/OrderReportGrid';
-import RangeDatePicker from '../../components/RangeDatePicker';
+import RangeDatePicker from '../../components/Forms/RangeDatePicker';
 import Helper from '../../hooks/Helper';
 import DeleteAlert from '../../components/Alerts/DeleteAlert';
 import {setOrderReportCache} from '../../redux/reducers/OrderReportSlice'

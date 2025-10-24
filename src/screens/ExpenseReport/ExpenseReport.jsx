@@ -7,7 +7,11 @@ import ExpenseReportService from '../../services/ExpenseReportService';
 import Loading from '../../components/loading';
 import errorAlert from '../../components/Alerts/ErrorAlert';
 import ExpenseReportGrid from '../../components/Grids/ExpenseReportGrid';
-import RangeDatePicker from '../../components/RangeDatePicker';
+import RangeDatePicker from '../../components/Forms/RangeDatePicker';
+  import LinkApp from '../../components/LinkApp';
+  import {
+  Button,
+} from '@mui/material';
 
 const ExpenseReport = () => {
     const {id} = useParams();
@@ -86,6 +90,18 @@ const ExpenseReport = () => {
               defaultValueEndDate={endDate}
               onClickButton={onClickApply}
               />
+
+            <LinkApp to={`/expenseReport/create/${id}`} color="white">
+              <Button
+                variant="contained"
+                color="confirm"
+                sx={{
+                  marginBottom: "1%",
+                }}
+              >
+                  Add Report
+              </Button>     
+            </LinkApp>
 
             <ExpenseReportGrid expenseReport={expenseReport}/>
           </div>

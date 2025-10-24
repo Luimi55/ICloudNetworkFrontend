@@ -5,7 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TextField } from '@mui/material';
 import dayjs from 'dayjs';
-import Helper from '../hooks/Helper';
+import Helper from '../../hooks/Helper';
 
 export default function BasicDatePicker({defaultValue, onChange, label, maxDate}) {
     const {getDateFormatted} = Helper()
